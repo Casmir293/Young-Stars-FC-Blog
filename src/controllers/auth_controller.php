@@ -15,10 +15,10 @@ class AuthController
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $username = $_POST['username'];
-            $password = $_POST['password'];
             $email = $_POST['email'];
+            $password = $_POST['password'];
 
-            $result = $this->auth->register($username, $password, $email);
+            $result = $this->auth->register($username, $email, $password);
 
             if ($result['status']) {
                 return $result['message']; // Registration successful.

@@ -1,4 +1,6 @@
 <?php
+require_once('../../config/db.php');
+
 class Auth
 {
     private $pdo;
@@ -8,7 +10,7 @@ class Auth
         $this->pdo = $pdo;
     }
 
-    public function register($username, $password, $email)
+    public function register($username, $email, $password)
     {
         // Check if username already exists
         $stmt = $this->pdo->prepare("SELECT * FROM users WHERE username = ?");
