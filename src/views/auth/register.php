@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Young</title>
+    <title>Young Stars FC</title>
     <?php include_once('../templates/bootstrap_css.php'); ?>
 </head>
 
@@ -15,20 +15,20 @@
             <form>
                 <h3 class="mb-4 text-center">Register your account</h3>
                 <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Email address <span class="text-danger">*</span></label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter your email" required>
+                    <label class="form-label">Email address <span class="text-danger">*</span></label>
+                    <input type="email" name="email" maxlength="50" class="form-control" aria-describedby="emailHelp" placeholder="Enter your email" required>
                 </div>
                 <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Username <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="exampleInputUsername" aria-describedby="emailHelp" placeholder="Enter your username" required>
+                    <label class="form-label">Username <span class="text-danger">*</span></label>
+                    <input type="text" name="username" maxlength="50" class="form-control" aria-describedby="emailHelp" placeholder="Enter your username" required>
                 </div>
                 <div class="mb-3">
-                    <label for="exampleInputPassword1" class="form-label">Password <span class="text-danger">*</span></label>
-                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Enter your password" required>
+                    <label class="form-label">Password <span class="text-danger">*</span></label>
+                    <input type="password" name="password" maxlength="15" class="form-control" placeholder="Enter your password" required>
                 </div>
                 <div class="mb-3">
-                    <label for="exampleInputPassword1" class="form-label">Confirm password <span class="text-danger">*</span></label>
-                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Confirm your password" required>
+                    <label class="form-label">Confirm password <span class="text-danger">*</span></label>
+                    <input type="password" maxlength="15" class="form-control" placeholder="Confirm your password" required>
                 </div>
                 <div id="emailHelp" class="form-text mb-3">Already have an account? <a href="">Login</a></div>
 
