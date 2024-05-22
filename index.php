@@ -38,6 +38,7 @@ switch ($action) {
         $token = intval($_GET['token']);
 
         $message = $authController->verify_email($email, $token);
+        echo $message;
         include './src/views/auth/login.php';
         break;
 

@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
     <div class="container">
-        <a class="navbar-brand" href="#"> M<span class="text-warning">y</span> BL<span class="text-warning">O</span>G</a>
+        <a class="navbar-brand" href="#"> Y<span class="text-warning">OUN</span>G✨<span class="text-warning">S</span>TAR<span class="text-warning">S✨F</span>C</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
