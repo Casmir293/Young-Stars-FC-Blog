@@ -3,7 +3,7 @@ require_once './config/db.php';
 require_once './src/controllers/auth_controller.php';
 require_once './src/controllers/post_controller.php';
 
-$authController = new Auth($pdo);
+$authController = new AuthController($pdo);
 
 $action = $_GET['action'] ?? 'default';
 
@@ -31,6 +31,14 @@ switch ($action) {
         } else {
             include './src/views/auth/register.php';
         }
+        break;
+
+    case 'verify_email':
+        $email = htmlspecialchars($_GET['email']);
+        $token = intval($_GET['token']);
+
+        $message = $authController->verify_email($email, $token);
+        include './src/views/auth/login.php';
         break;
 
     case 'view_post':

@@ -1,6 +1,12 @@
 <?php
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
 require_once '../models/auth.php';
+require_once '../../config/secret.php';
+require '../../vendor/autoload.php';
 
 class AuthController
 {
@@ -11,14 +17,72 @@ class AuthController
         $this->auth = new Auth($pdo);
     }
 
+    # PHP Mailer
+    private function send_email_verification($username, $email, $token)
+    {
+        global $SMTPPassword;
+        $mail = new PHPMailer(true);
+
+        try {
+            // Server settings
+            $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+            $mail->isSMTP();
+            $mail->SMTPAuth   = true;
+            $mail->Host       = 'smtp.gmail.com';
+            $mail->Username   = 'casmir293@gmail.com';
+            $mail->Password   = $SMTPPassword;
+            $mail->SMTPSecure = 'ssl';
+            $mail->Port       = 465;
+
+            //Recipients
+            $mail->setFrom('casmir293@gmail.com', $username);
+            $mail->addAddress($email);
+
+            //Content
+            $mail->isHTML(true);
+            $mail->Subject = 'Email Verificatition from Young Stars FC';
+            $email_template =   "
+                                <h2>You have Registered with Young Stars FC</h2>
+                                <p>Verify your email address with the below link to enable your login access.</p>
+                                <br/><br/>
+                                <button><a href='http://localhost/blog/index.php?action=verify_email&email=$email&token=$token'>Verify!</a></button>
+                                ";
+            $mail->Body = $email_template;
+            $mail->send();
+            echo 'Message sent successfully';
+        } catch (Exception $e) {
+            echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+        }
+    }
+
+    # Registration
     public function register()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $username = $_POST['username'];
             $email = $_POST['email'];
             $password = $_POST['password'];
+            $token = md5(rand());
 
-            $result = $this->auth->register($username, $email, $password);
+            $result = $this->auth->register($username, $email, $password, $token);
+
+            if ($result['status']) {
+                $this->send_email_verification($username, $email, $token);
+                return $result['message'];
+            } else {
+                return $result['message'];
+            }
+        }
+    }
+
+    # Verify Email
+    public function verify_email()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            $email = $_GET['email'];
+            $token = $_GET['token'];
+
+            $result = $this->auth->verify_email($email, $token);
 
             if ($result['status']) {
                 return $result['message'];
@@ -28,6 +92,7 @@ class AuthController
         }
     }
 
+    # Login
     public function login()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
