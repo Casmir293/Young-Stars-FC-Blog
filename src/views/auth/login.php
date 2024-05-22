@@ -24,12 +24,10 @@
                     <div class="form-text mb-3"><a href="form-text" class="">Forgot password?</a></div>
                 </div>
                 <div id="emailHelp" class="form-text mb-3">Don't have an account? <a href="">Register</a></div>
-
                 <button type="submit" class="btn btn-primary w-100">Login</button>
             </form>
         </div>
     </section>
-
     <?php include_once('../templates/bootstrap_js.php'); ?>
 </body>
 
