@@ -5,7 +5,9 @@ require_once './src/controllers/post_controller.php';
 
 $authController = new AuthController($pdo);
 
-$action = $_GET['action'] ?? 'default';
+// $action = $_GET['action'] ?? 'default';
+$page = isset($_GET['page']) ? $_GET['page'] : 'home';
+$action = isset($_GET['action']) ? $_GET['action'] : null;
 
 switch ($action) {
     case 'login':
@@ -21,7 +23,7 @@ switch ($action) {
         break;
 
     case 'register':
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'register') {
             $username = htmlspecialchars($_POST['username']);
             $email = htmlspecialchars($_POST['email']);
             $password = htmlspecialchars($_POST['password']);

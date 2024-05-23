@@ -12,7 +12,7 @@
     <?php include_once('../templates/auth_header.php'); ?>
     <section class="container outer-wrapper">
         <div class="wrapper p-5 shadow-lg">
-            <form id="registrationForm" method="post" action="">
+            <form id="registrationForm" method="post" action="../../../index.php?action=register">
                 <h3 class="mb-4 text-center">Register your account</h3>
                 <div class="mb-3">
                     <label class="form-label">Email address <span class="text-danger">*</span></label>
@@ -70,6 +70,7 @@
 
     .alert {
         animation: slide-in 0.5s forwards, slide-out 0.5s 2.5s forwards;
+        min-width: 300px;
     }
 
     @keyframes slide-in {

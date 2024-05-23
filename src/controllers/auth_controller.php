@@ -4,9 +4,9 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
-require_once '../models/auth.php';
-require_once '../../config/secret.php';
-require '../../vendor/autoload.php';
+require_once './src/models/auth.php';
+require_once './config/secret.php';
+require './vendor/autoload.php';
 
 class AuthController
 {
