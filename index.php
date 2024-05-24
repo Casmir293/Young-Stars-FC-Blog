@@ -11,46 +11,52 @@ $page = isset($_GET['page']) ? $_GET['page'] : 'home';
 $action = isset($_GET['action']) ? $_GET['action'] : null;
 
 switch ($page) {
-    case 'login':
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $username = htmlspecialchars($_POST['username']);
-            $password = htmlspecialchars($_POST['password']);
+        # REGISTRATION
+    case 'register':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'register') {
+            $message = $authController->register();
+            $_SESSION['message'] = $message['message'];
 
-            $message = $authController->login($email, $password);
-            echo $message;
+            if ($message['status']) {
+                header('Location: ?page=login');
+            } else {
+                header('Location: ?page=register');
+            }
+            exit();
+        }
+        include './src/views/auth/register.php';
+        break;
+
+        # EMAIL VERIFICATION
+    case 'verify_email':
+        if ($action === 'verify_email') {
+            $message = $authController->verify_email();
+            $_SESSION['message'] = $message['message'];
+
+            if ($message['status']) {
+                header('Location: ?page=login');
+            } else {
+                header('Location: ?page=register');
+            }
+            exit();
+        }
+        include './src/views/auth/register.php';
+        break;
+
+        # LOGIN
+    case 'login':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'login') {
+            $message = $authController->login();
+
+            if ($message['status']) {
+                header('Location: ');
+            } else {
+                header('Location: ?page=login');
+            }
+            exit();
         } else {
             include './src/views/auth/login.php';
         }
-        break;
-
-    case 'register':
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'register') {
-            $username = htmlspecialchars($_POST['username']);
-            $email = htmlspecialchars($_POST['email']);
-            $password = htmlspecialchars($_POST['password']);
-
-            $message = $authController->register($username, $email, $password);
-            $_SESSION['message'] = $message;
-
-            if ($message == 'Registration successful! Verification link sent to your email.') {
-                header('Location: ?page=login');
-                exit();
-            } else {
-                header('Location: ?page=register');
-                exit();
-            }
-        } else {
-            include './src/views/auth/register.php';
-        }
-        break;
-
-    case 'verify_email':
-        $email = htmlspecialchars($_GET['email']);
-        $token = intval($_GET['token']);
-
-        $message = $authController->verify_email($email, $token);
-        echo $message;
-        include './src/views/auth/login.php';
         break;
 
     case 'view_post':

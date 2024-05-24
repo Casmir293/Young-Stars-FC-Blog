@@ -45,7 +45,7 @@ class AuthController
                                 <h2>You have Registered with Young Stars FC</h2>
                                 <p>Verify your email address with the below link to enable your login access.</p>
                                 <br/><br/>
-                                <button><a href='http://localhost/blog/index.php?action=verify_email&email=$email&token=$token'>Verify!</a></button>
+                                <button class='btn btn-primary'><a href='http://localhost/blog/?page=verify_email&action=verify_email&email=$email&token=$token'>Verify!</a></button>
                                 ";
             $mail->Body = $email_template;
             $mail->send();
@@ -55,12 +55,12 @@ class AuthController
         }
     }
 
-    # Registration
+    # REGISTRATION
     public function register()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $username = $_POST['username'];
-            $email = $_POST['email'];
+            $username = trim($_POST['username']);
+            $email = trim($_POST['email']);
             $password = $_POST['password'];
             $token = md5(rand());
 
@@ -68,31 +68,23 @@ class AuthController
 
             if ($result['status']) {
                 $this->send_email_verification($username, $email, $token);
-                return $result['message'];
-            } else {
-                return $result['message'];
             }
+            return $result;
         }
     }
 
-    # Verify Email
+    # EMAIL VERIFICATION
     public function verify_email()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $email = $_GET['email'];
             $token = $_GET['token'];
-
             $result = $this->auth->verify_email($email, $token);
-
-            if ($result['status']) {
-                return $result['message'];
-            } else {
-                return $result['message'];
-            }
+            return $result;
         }
     }
 
-    # Login
+    # LOGIN
     public function login()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {

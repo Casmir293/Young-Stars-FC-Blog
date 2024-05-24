@@ -19,7 +19,7 @@ if (!defined('ROOT_PATH')) {
     <?php include_once(ROOT_PATH . '/src/views/templates/auth_header.php'); ?>
 
     <?php if (isset($_SESSION['message'])) {
-        echo "<div class='alertContainer alert alert-danger' role='alert'>" . $_SESSION['message'] . "</div>";
+        echo "<div class='alertContainer alert alert-danger' role='alert'>" . htmlspecialchars($_SESSION['message']) . "</div>";
         unset($_SESSION['message']);
     } ?>
 
