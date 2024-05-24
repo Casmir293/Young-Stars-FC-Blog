@@ -45,7 +45,7 @@ class AuthController
                                 <h2>You have Registered with Young Stars FC</h2>
                                 <p>Verify your email address with the below link to enable your login access.</p>
                                 <br/><br/>
-                                <button class='btn btn-primary'><a href='http://localhost/blog/?page=verify_email&action=verify_email&email=$email&token=$token'>Verify!</a></button>
+                                <a href='http://localhost/blog/?page=verify_email&action=verify_email&email=$email&token=$token'>Verify!</a>
                                 ";
             $mail->Body = $email_template;
             $mail->send();
@@ -90,13 +90,8 @@ class AuthController
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $email = $_POST['email'];
             $password = $_POST['password'];
-
             $result = $this->auth->login($email, $password);
-            if ($result['status']) {
-                return $result['message'];
-            } else {
-                return $result['message'];
-            }
+            return $result;
         }
     }
 }

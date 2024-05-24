@@ -16,6 +16,7 @@ switch ($page) {
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'register') {
             $message = $authController->register();
             $_SESSION['message'] = $message['message'];
+            $_SESSION['status'] = $message['status'];
 
             if ($message['status']) {
                 header('Location: ?page=login');
@@ -32,6 +33,7 @@ switch ($page) {
         if ($action === 'verify_email') {
             $message = $authController->verify_email();
             $_SESSION['message'] = $message['message'];
+            $_SESSION['status'] = $message['status'];
 
             if ($message['status']) {
                 header('Location: ?page=login');
@@ -47,16 +49,18 @@ switch ($page) {
     case 'login':
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'login') {
             $message = $authController->login();
+            $_SESSION['message'] = $message['message'];
+            $_SESSION['status'] = $message['status'];
+            $_SESSION['id'] = $message['id'];
 
             if ($message['status']) {
-                header('Location: ');
+                header('Location: index.php');
             } else {
                 header('Location: ?page=login');
             }
             exit();
-        } else {
-            include './src/views/auth/login.php';
         }
+        include './src/views/auth/login.php';
         break;
 
     case 'view_post':

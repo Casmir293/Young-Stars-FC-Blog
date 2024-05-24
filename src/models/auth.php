@@ -55,14 +55,14 @@ class Auth
     # LOGIN
     public function login($email, $password)
     {
-        $stmt = $this->pdo->prepare("SELECT * FROM users WHERE email = ?");
+        $stmt = $this->pdo->prepare("SELECT id, password FROM users WHERE email = ?");
         $stmt->execute([$email]);
         $user = $stmt->fetch();
+
         if ($user && password_verify($password, $user['password'])) {
-            ['status' => true, 'message' => 'Login successful.'];
-            return $user;
+            return ['status' => true, 'message' => 'Login successful.', 'authenticated' => true, 'id' => $user['id']];
+        } else {
+            return ['status' => false, 'message' => 'Incorrect login details.'];
         }
-        ['status' => false, 'message' => 'Login failed.'];
-        return false;
     }
 }

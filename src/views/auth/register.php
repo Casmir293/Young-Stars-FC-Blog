@@ -18,14 +18,19 @@ if (!defined('ROOT_PATH')) {
 <body>
     <?php include_once(ROOT_PATH . '/src/views/templates/auth_header.php'); ?>
 
-    <?php if (isset($_SESSION['message'])) {
+    <?php if (isset($_SESSION['message']) && $_SESSION['status']) {
+        echo "<div class='alertContainer alert alert-success' role='alert'>" . htmlspecialchars($_SESSION['message']) . "</div>";
+        unset($_SESSION['message']);
+        unset($_SESSION['status']);
+    } else if (isset($_SESSION['message']) && !$_SESSION['status']) {
         echo "<div class='alertContainer alert alert-danger' role='alert'>" . htmlspecialchars($_SESSION['message']) . "</div>";
         unset($_SESSION['message']);
+        unset($_SESSION['status']);
     } ?>
 
     <section class="container outer-wrapper">
         <div class="wrapper p-5 shadow-lg">
-            <form id="registrationForm" method="post" action="?page=register&action=register">
+            <form id="registrationForm" method="POST" action="?page=register&action=register">
                 <h3 class="mb-4 text-center">Register your account</h3>
 
                 <div class="mb-3">
@@ -44,7 +49,7 @@ if (!defined('ROOT_PATH')) {
                     <label class="form-label">Confirm password <span class="text-danger">*</span></label>
                     <input type="password" id="confirmPassword" maxlength="15" class="form-control" placeholder="Confirm your password" required>
                 </div>
-                <div id="emailHelp" class="form-text mb-3">Already have an account? <a href="">Login</a></div>
+                <div id="emailHelp" class="form-text mb-3">Already have an account? <a href="?page=login">Login</a></div>
 
                 <button type="submit" class="btn btn-primary w-100">Submit</button>
             </form>
