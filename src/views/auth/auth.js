@@ -14,7 +14,7 @@
 
             setTimeout(() => {
                 alertDiv.remove();
-            }, 3000);
+            }, 5000);
         } else {
             this.submit();
         }

@@ -1,3 +1,9 @@
+<?php
+if (!defined('ROOT_PATH')) {
+    define('ROOT_PATH', dirname(dirname(dirname(__FILE__))));
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,15 +11,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Young Stars FC</title>
-    <?php include_once('../templates/bootstrap_css.php'); ?>
+    <?php include_once(ROOT_PATH . '/src/views/templates/bootstrap_css.php'); ?>
 </head>
 
 <body>
-    <?php include_once('../templates/auth_header.php'); ?>
+    <?php include_once(ROOT_PATH . '/src/views/templates/auth_header.php'); ?>
+
+    <?php if (isset($_SESSION['message'])) {
+        echo "<div class='alertContainer alert alert-danger' role='alert'>" . $_SESSION['message'] . "</div>";
+        unset($_SESSION['message']);
+    } ?>
+
     <section class="container outer-wrapper">
         <div class="wrapper p-5 shadow-lg">
-            <form id="registrationForm" method="post" action="../../../index.php?action=register">
+            <form id="registrationForm" method="post" action="?page=register&action=register">
                 <h3 class="mb-4 text-center">Register your account</h3>
+
                 <div class="mb-3">
                     <label class="form-label">Email address <span class="text-danger">*</span></label>
                     <input type="email" name="email" maxlength="50" class="form-control" aria-describedby="emailHelp" placeholder="Enter your email" required>
@@ -34,11 +47,11 @@
 
                 <button type="submit" class="btn btn-primary w-100">Submit</button>
             </form>
-            <div id="alertContainer"></div>
+            <div id="alertContainer" class="alertContainer"></div>
         </div>
     </section>
-    <?php include_once('../templates/bootstrap_js.php'); ?>
-    <script src="./auth.js"></script>
+    <?php include_once(ROOT_PATH . '/src/views/templates/bootstrap_js.php'); ?>
+    <script src="src/views/auth/auth.js"></script>
 </body>
 
 
@@ -58,7 +71,7 @@
         max-width: 500px;
     }
 
-    #alertContainer {
+    .alertContainer {
         position: fixed;
         top: 20px;
         right: 20px;

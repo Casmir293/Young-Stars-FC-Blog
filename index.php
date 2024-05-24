@@ -1,4 +1,6 @@
 <?php
+session_start();
+define('ROOT_PATH', __DIR__);
 require_once './config/db.php';
 require_once './src/controllers/auth_controller.php';
 require_once './src/controllers/post_controller.php';
@@ -9,7 +11,7 @@ $authController = new AuthController($pdo);
 $page = isset($_GET['page']) ? $_GET['page'] : 'home';
 $action = isset($_GET['action']) ? $_GET['action'] : null;
 
-switch ($action) {
+switch ($page) {
     case 'login':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $username = htmlspecialchars($_POST['username']);
@@ -29,7 +31,8 @@ switch ($action) {
             $password = htmlspecialchars($_POST['password']);
 
             $message = $authController->register($username, $email, $password);
-            echo $message;
+            $_SESSION['message'] = $message;
+            header('Location: ?page=register');
         } else {
             include './src/views/auth/register.php';
         }

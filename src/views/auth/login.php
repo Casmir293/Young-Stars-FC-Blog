@@ -5,11 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Young Stars FC</title>
-    <?php include_once('../templates/bootstrap_css.php'); ?>
+    <?php include_once(ROOT_PATH . '/src/views/templates/bootstrap_css.php'); ?>
 </head>
 
 <body>
-    <?php include_once('../templates/auth_header.php'); ?>
+    <?php include_once(ROOT_PATH . '/src/views/templates/auth_header.php'); ?>
     <section class="container outer-wrapper">
         <div class="wrapper p-5 shadow-lg">
             <form>
@@ -28,7 +28,7 @@
             </form>
         </div>
     </section>
-    <?php include_once('../templates/bootstrap_js.php'); ?>
+    <?php include_once(ROOT_PATH . '/src/views/templates/bootstrap_js.php'); ?>
 </body>
 
 <style>
