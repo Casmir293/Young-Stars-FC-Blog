@@ -68,7 +68,7 @@ class AuthController
 
             if ($result['status']) {
                 $this->send_email_verification($username, $email, $token);
-                $result['message'];
+                return $result['message'];
             } else {
                 return $result['message'];
             }

@@ -7,7 +7,6 @@ require_once './src/controllers/post_controller.php';
 
 $authController = new AuthController($pdo);
 
-// $action = $_GET['action'] ?? 'default';
 $page = isset($_GET['page']) ? $_GET['page'] : 'home';
 $action = isset($_GET['action']) ? $_GET['action'] : null;
 
@@ -32,7 +31,14 @@ switch ($page) {
 
             $message = $authController->register($username, $email, $password);
             $_SESSION['message'] = $message;
-            header('Location: ?page=register');
+
+            if ($message == 'Registration successful! Verification link sent to your email.') {
+                header('Location: ?page=login');
+                exit();
+            } else {
+                header('Location: ?page=register');
+                exit();
+            }
         } else {
             include './src/views/auth/register.php';
         }

@@ -12,6 +12,7 @@ if (!defined('ROOT_PATH')) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Young Stars FC</title>
     <?php include_once(ROOT_PATH . '/src/views/templates/bootstrap_css.php'); ?>
+    <link rel="stylesheet" href="src/views/auth/auth.css">
 </head>
 
 <body>
@@ -53,62 +54,5 @@ if (!defined('ROOT_PATH')) {
     <?php include_once(ROOT_PATH . '/src/views/templates/bootstrap_js.php'); ?>
     <script src="src/views/auth/auth.js"></script>
 </body>
-
-
-<style>
-    .outer-wrapper {
-        display: flex;
-        justify-content: center;
-        height: 94vh;
-        align-items: center;
-    }
-
-    .wrapper {
-        background: #f8f9fa;
-        padding: 20px;
-        border-radius: 8px;
-        width: 100%;
-        max-width: 500px;
-    }
-
-    .alertContainer {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        z-index: 1050;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-    }
-
-    .alert {
-        animation: slide-in 0.5s forwards, slide-out 0.5s 2.5s forwards;
-        min-width: 300px;
-    }
-
-    @keyframes slide-in {
-        from {
-            opacity: 0;
-            transform: translateX(100%);
-        }
-
-        to {
-            opacity: 1;
-            transform: translateX(0);
-        }
-    }
-
-    @keyframes slide-out {
-        from {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        to {
-            opacity: 0;
-            transform: translateX(100%);
-        }
-    }
-</style>
 
 </html>

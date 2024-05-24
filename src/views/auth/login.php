@@ -6,10 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Young Stars FC</title>
     <?php include_once(ROOT_PATH . '/src/views/templates/bootstrap_css.php'); ?>
+    <link rel="stylesheet" href="src/views/auth/auth.css">
 </head>
 
 <body>
     <?php include_once(ROOT_PATH . '/src/views/templates/auth_header.php'); ?>
+
+    <?php if (isset($_SESSION['message'])) {
+        echo "<div class='alertContainer alert alert-success' role='alert' id='success-toast' onload='successAlert()'>" . $_SESSION['message'] . "</div>";
+        unset($_SESSION['message']);
+    } ?>
+
     <section class="container outer-wrapper">
         <div class="wrapper p-5 shadow-lg">
             <form>
@@ -29,23 +36,7 @@
         </div>
     </section>
     <?php include_once(ROOT_PATH . '/src/views/templates/bootstrap_js.php'); ?>
+    <script src="src/views/auth/auth.js"></script>
 </body>
-
-<style>
-    .outer-wrapper {
-        display: flex;
-        justify-content: center;
-        height: 94vh;
-        align-items: center;
-    }
-
-    .wrapper {
-        background: #f8f9fa;
-        padding: 20px;
-        border-radius: 8px;
-        width: 100%;
-        max-width: 500px;
-    }
-</style>
 
 </html>

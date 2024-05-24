@@ -1,3 +1,4 @@
+    // Validate Registration Form
     document.getElementById('registrationForm').addEventListener('submit', function (event) {
         event.preventDefault();
         
@@ -14,8 +15,18 @@
 
             setTimeout(() => {
                 alertDiv.remove();
-            }, 5000);
+            }, 6000);
         } else {
             this.submit();
         }
     });
+
+    // Successful Registration Alert
+     successAlert =()=> {
+        const successToast = document.getElementById('success-toast');
+
+        setTimeout(() => {
+            successToast.remove();
+        }, 6000);
+    }
+    
