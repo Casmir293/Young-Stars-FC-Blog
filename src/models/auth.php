@@ -52,6 +52,50 @@ class Auth
         }
     }
 
+    # FORGOT PASSWORD
+    public function forgot_password($email)
+    {
+        $stmt = $this->pdo->prepare("SELECT username, email FROM users WHERE email = ?");
+        $stmt->execute([$email]);
+        $user = $stmt->fetch();
+
+        if ($stmt->rowCount() > 0) {
+            $username = $user['username'];
+            $user_email = $user['email'];
+            $token = md5(rand());
+
+            $updated_token = $this->pdo->prepare("UPDATE users SET token = '$token' WHERE email = '$user_email'");
+            $updated_token->execute();
+            return ['status' => true, 'username' => $username, 'email' => $user_email, 'token' => $token];
+        } else {
+            return ['status' => false, 'message' => 'Email not registered.'];
+        }
+    }
+
+    # RESET PASSWORD
+    public function reset_password($password, $token)
+    {
+        $stmt = $this->pdo->prepare("SELECT token FROM users WHERE token='$token'");
+        $stmt->execute();
+
+        if ($stmt->rowCount() > 0) {
+            $passwordHash = password_hash($password, PASSWORD_BCRYPT);
+            $update_password = $this->pdo->prepare("UPDATE users SET password = '$passwordHash' WHERE token = '$token'");
+            $update_password->execute();
+
+            if ($update_password) {
+                $new_token = md5(rand());
+                $upadte_token = $this->pdo->prepare("UPDATE users SET token = '$new_token' WHERE token = '$token'");
+                $upadte_token->execute();
+                return ['status' => true, 'message' => 'Updated password successfully.'];
+            } else {
+                return ['status' => false, 'message' => 'Could not update password, something went wrong.'];
+            }
+        } else {
+            return ['status' => false, 'message' => 'Invalid token.'];
+        }
+    }
+
     # LOGIN
     public function login($email, $password)
     {

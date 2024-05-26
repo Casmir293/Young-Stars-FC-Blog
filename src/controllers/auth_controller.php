@@ -17,7 +17,7 @@ class AuthController
         $this->auth = new Auth($pdo);
     }
 
-    # PHP Mailer
+    # PHP Mailer - Send Email Verification
     private function send_email_verification($username, $email, $token)
     {
         global $SMTPPassword;
@@ -80,6 +80,77 @@ class AuthController
             $email = $_GET['email'];
             $token = $_GET['token'];
             $result = $this->auth->verify_email($email, $token);
+            return $result;
+        }
+    }
+
+    # PHP Mailer - New Password Verification
+    private function new_password_verification($username, $email, $token)
+    {
+        global $SMTPPassword;
+        $mail = new PHPMailer(true);
+
+        try {
+            // Server settings
+            $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+            $mail->isSMTP();
+            $mail->SMTPAuth   = true;
+            $mail->Host       = 'smtp.gmail.com';
+            $mail->Username   = 'casmir293@gmail.com';
+            $mail->Password   = $SMTPPassword;
+            $mail->SMTPSecure = 'ssl';
+            $mail->Port       = 465;
+
+            //Recipients
+            $mail->setFrom('casmir293@gmail.com', $username);
+            $mail->addAddress($email);
+
+            //Content
+            $mail->isHTML(true);
+            $mail->Subject = 'Password reset from Young Stars FC';
+            $email_template =   "
+                                <h2>You have requested a password reset on your Young Stars FC account</h2>
+                                <p>Verify your email address with the below link to enable you to set a new password.</p>
+                                <br/><br/>
+                                <a href='http://localhost/blog/?page=reset_password&action=reset_password&email=$email&token=$token'>Verify!</a>
+                                ";
+            $mail->Body = $email_template;
+            $mail->send();
+            echo 'Message sent successfully';
+        } catch (Exception $e) {
+            echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+        }
+    }
+
+    # FORGOT PASSWORD
+    public function forgot_password()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $email = trim($_POST['email']);
+
+            $result = $this->auth->forgot_password($email);
+
+            if ($result['status']) {
+                $username = $result['username'];
+                $email = $result['email'];
+                $token = $result['token'];
+
+                $this->new_password_verification($username, $email, $token);
+                return ['status' => true, 'message' => 'Password reset link has been sent to your email.'];
+            } else {
+                return $result;
+            }
+        }
+    }
+
+    # RESET PASSWORD
+    public function reset_password()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $password = $_POST['password'];
+            $token = $_POST['token'];
+
+            $result = $this->auth->reset_password($password, $token);
             return $result;
         }
     }

@@ -15,8 +15,9 @@ switch ($page) {
     case 'register':
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'register') {
             $message = $authController->register();
-            $_SESSION['message'] = $message['message'];
+
             $_SESSION['status'] = $message['status'];
+            $_SESSION['message'] = $message['message'];
 
             if ($message['status']) {
                 header('Location: ?page=login');
@@ -32,8 +33,9 @@ switch ($page) {
     case 'verify_email':
         if ($action === 'verify_email') {
             $message = $authController->verify_email();
-            $_SESSION['message'] = $message['message'];
+
             $_SESSION['status'] = $message['status'];
+            $_SESSION['message'] = $message['message'];
 
             if ($message['status']) {
                 header('Location: ?page=login');
@@ -43,6 +45,50 @@ switch ($page) {
             exit();
         }
         include './src/views/auth/register.php';
+        break;
+
+        # FORGOT PASSWORD
+    case 'forgot_password':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'forgot_password') {
+            $message = $authController->forgot_password();
+
+            $_SESSION['status'] = $message['status'];
+            $_SESSION['message'] = $message['message'];
+
+            if ($message['status']) {
+                header('Location: ?page=login');
+            } else {
+                header('Location: ?page=forgot_password');
+            }
+            exit();
+        }
+        include './src/views/auth/forgot_password.php';
+        break;
+
+        # RESET PASSWORD
+    case 'reset_password':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'reset_password') {
+            $message = $authController->reset_password();
+
+            $email = $_GET['email'];
+            $token = $_GET['token'];
+            $_SESSION['email'] = $email;
+            $_SESSION['token'] = $token;
+            $_SESSION['status'] = $message['status'];
+            $_SESSION['message'] = $message['message'];
+
+            if ($message['status']) {
+                header('Location: ?page=login');
+            } else {
+                if ($email && $token) {
+                    header("Location: ?page=reset_password?email=$email&token=$token");
+                } else {
+                    header("Location: ?page=reset_password");
+                }
+            }
+            exit();
+        }
+        include './src/views/auth/reset_password.php';
         break;
 
         # LOGIN

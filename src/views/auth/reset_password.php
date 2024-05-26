@@ -1,9 +1,3 @@
-<?php
-if (!defined('ROOT_PATH')) {
-    define('ROOT_PATH', dirname(dirname(dirname(__FILE__))));
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,16 +24,20 @@ if (!defined('ROOT_PATH')) {
 
     <section class="container outer-wrapper">
         <div class="wrapper p-5 shadow-lg">
-            <form id="registrationForm" method="POST" action="?page=register&action=register">
-                <h3 class="mb-4 text-center">Register your account</h3>
-
+            <form id="registrationForm" method="POST" action="?page=reset_password&action=reset_password">
+                <input name="email" type="hidden" maxlength="50" value="<?php if (isset($_GET['email'])) {
+                                                                            echo $_GET['email'];
+                                                                        } ?>">
+                <input type="hidden" name="token" value="<?php if (isset($_GET['token'])) {
+                                                                echo $_GET['token'];
+                                                            } ?>">
+                <h3 class="mb-4 text-center">Reset Password</h3>
                 <div class="mb-3">
                     <label class="form-label">Email address <span class="text-danger">*</span></label>
-                    <input type="email" name="email" maxlength="50" class="form-control" aria-describedby="emailHelp" placeholder="Enter your email" required>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Username <span class="text-danger">*</span></label>
-                    <input type="text" name="username" maxlength="50" class="form-control" aria-describedby="emailHelp" placeholder="Enter your username" required>
+
+                    <input value="<?php if (isset($_GET['email'])) {
+                                        echo $_GET['email'];
+                                    } ?>" type="email" name="email" maxlength="50" class="form-control" aria-describedby="emailHelp" placeholder="Enter your email" disabled required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Password <span class="text-danger">*</span></label>
@@ -49,9 +47,8 @@ if (!defined('ROOT_PATH')) {
                     <label class="form-label">Confirm password <span class="text-danger">*</span></label>
                     <input type="password" id="confirmPassword" maxlength="15" class="form-control" placeholder="Confirm your password" required>
                 </div>
-                <div class="form-text mb-3">Already have an account? <a href="?page=login">Login</a></div>
-
-                <button type="submit" class="btn btn-primary w-100">Submit</button>
+                <div class="form-text mb-3">Go back to <a href="?page=login">Login</a></div>
+                <button type="submit" class="btn btn-primary w-100">Update Password</button>
             </form>
             <div id="alertContainer" class="alertContainer"></div>
         </div>

@@ -32,7 +32,7 @@
                 <div class="mb-3">
                     <label class="form-label">Password <span class="text-danger">*</span></label>
                     <input type="password" name="password" maxlength="15" class="form-control" placeholder="Enter your password" required>
-                    <div class="form-text mb-3"><a href="form-text" class="">Forgot password?</a></div>
+                    <div class="form-text mb-3"><a href="?page=forgot_password" class="">Forgot password?</a></div>
                 </div>
                 <div id="emailHelp" class="form-text mb-3">Don't have an account? <a href="?page=register">Register</a></div>
                 <button type="submit" class="btn btn-primary w-100">Login</button>
