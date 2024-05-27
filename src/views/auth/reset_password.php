@@ -48,7 +48,13 @@
                     <input type="password" id="confirmPassword" maxlength="15" class="form-control" placeholder="Confirm your password" required>
                 </div>
                 <div class="form-text mb-3">Go back to <a href="?page=login">Login</a></div>
-                <button type="submit" class="btn btn-primary w-100">Update Password</button>
+
+                <button id="submit-form" type="submit" class="btn btn-primary w-100">Update Password</button>
+
+                <button id="loading" class="btn btn-primary w-100 d-none" type="button" disabled>
+                    <span class="spinner-grow spinner-grow-sm" aria-hidden="true"></span>
+                    <span role="status">Loading...</span>
+                </button>
             </form>
             <div id="alertContainer" class="alertContainer"></div>
         </div>

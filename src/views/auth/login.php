@@ -23,7 +23,7 @@
     } ?>
     <section class="container outer-wrapper">
         <div class="wrapper p-5 shadow-lg">
-            <form method="POST" action="?page=login&action=login ">
+            <form method="POST" action="?page=login&action=login" onsubmit="loadButton()">
                 <h3 class="mb-4 text-center">Login your account</h3>
                 <div class="mb-3">
                     <label class="form-label">Email address <span class="text-danger">*</span></label>
@@ -35,12 +35,18 @@
                     <div class="form-text mb-3"><a href="?page=forgot_password" class="">Forgot password?</a></div>
                 </div>
                 <div id="emailHelp" class="form-text mb-3">Don't have an account? <a href="?page=register">Register</a></div>
-                <button type="submit" class="btn btn-primary w-100">Login</button>
+
+                <button id="submit-form" type="submit" class="btn btn-primary w-100">Login</button>
+
+                <button id="loading" class="btn btn-primary w-100 d-none" type="button" disabled>
+                    <span class="spinner-grow spinner-grow-sm" aria-hidden="true"></span>
+                    <span role="status">Loading...</span>
+                </button>
             </form>
         </div>
     </section>
     <?php include_once(ROOT_PATH . '/src/views/templates/bootstrap_js.php'); ?>
-    <!-- <script src="src/views/auth/auth.js"></script> -->
+    <script src="src/views/auth/auth.js"></script>
 </body>
 
 </html>
