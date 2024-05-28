@@ -34,7 +34,8 @@
                     <input type="password" name="password" maxlength="15" class="form-control" placeholder="Enter your password" required>
                     <div class="form-text mb-3"><a href="?page=forgot_password" class="">Forgot password?</a></div>
                 </div>
-                <div id="emailHelp" class="form-text mb-3">Don't have an account? <a href="?page=register">Register</a></div>
+                <div id="emailHelp" class="form-text mb-1">Don't have an account? <a href="?page=register">Register</a></div>
+                <div id="emailHelp" class="form-text mb-3">Resend <a href="?page=verification">Email Verification</a></div>
 
                 <button id="submit-form" type="submit" class="btn btn-primary w-100">Login</button>
 

@@ -93,13 +93,17 @@ switch ($page) {
 
         # LOGIN
     case 'login':
+        if (isset($_SESSION['authenticated'])) {
+            $authController->logout();
+        }
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'login') {
             $message = $authController->login();
-            $_SESSION['message'] = $message['message'];
-            $_SESSION['status'] = $message['status'];
-            $_SESSION['id'] = $message['id'];
 
             if ($message['status']) {
+                $_SESSION['message'] = $message['message'];
+                $_SESSION['authenticated'] = $message['authenticated'];
+                $_SESSION['status'] = $message['status'];
+                $_SESSION['id'] = $message['id'];
                 header('Location: index.php');
             } else {
                 header('Location: ?page=login');
@@ -108,6 +112,13 @@ switch ($page) {
         }
         include './src/views/auth/login.php';
         break;
+
+    case 'logout':
+        $message = $authController->logout();
+        $_SESSION['status'] = $message['status'];
+        $_SESSION['message'] = 'Logout successful';
+        header('Location: ?page=login');
+        exit();
 
     case 'view_post':
         $postId = intval($_GET['id']);
