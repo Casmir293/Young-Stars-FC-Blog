@@ -96,6 +96,28 @@ class Auth
         }
     }
 
+    # RESEND EMAIL VERIFICATION
+    public function resend_verification($email)
+    {
+        $stmt = $this->pdo->prepare("SELECT * FROM users WHERE email = ?");
+        $stmt->execute([$email]);
+        $user = $stmt->fetch();
+
+        if ($stmt->rowCount() > 0) {
+            if ($user['status'] == "0") {
+                $username = $user['username'];
+                $email = $user['email'];
+                $token = $user['token'];
+
+                return ['status' => true, 'location' => 'login', 'username' => $username, 'email' => $email, 'token' => $token];
+            } else {
+                return ['status' => false, 'location' => 'login', 'message' => 'Email already verified, please login.'];
+            }
+        } else {
+            return ['status' => false, 'location' => 'register', 'message' => 'You are not a registered user, kindly register your account.'];
+        }
+    }
+
     # LOGIN
     public function login($email, $password)
     {

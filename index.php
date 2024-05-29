@@ -13,6 +13,9 @@ $action = isset($_GET['action']) ? $_GET['action'] : null;
 switch ($page) {
         # REGISTRATION
     case 'register':
+        if (isset($_SESSION['authenticated'])) {
+            $authController->logout();
+        }
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'register') {
             $message = $authController->register();
 
@@ -29,7 +32,7 @@ switch ($page) {
         include './src/views/auth/register.php';
         break;
 
-        # EMAIL VERIFICATION
+        # RESEND EMAIL VERIFICATION
     case 'verify_email':
         if ($action === 'verify_email') {
             $message = $authController->verify_email();
@@ -49,6 +52,9 @@ switch ($page) {
 
         # FORGOT PASSWORD
     case 'forgot_password':
+        if (isset($_SESSION['authenticated'])) {
+            $authController->logout();
+        }
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'forgot_password') {
             $message = $authController->forgot_password();
 
@@ -67,6 +73,9 @@ switch ($page) {
 
         # RESET PASSWORD
     case 'reset_password':
+        if (isset($_SESSION['authenticated'])) {
+            $authController->logout();
+        }
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'reset_password') {
             $message = $authController->reset_password();
 
@@ -89,6 +98,27 @@ switch ($page) {
             exit();
         }
         include './src/views/auth/reset_password.php';
+        break;
+
+        # RESEND EMAIL VERIFICATION
+    case 'resend_verification';
+        if (isset($_SESSION['authenticated'])) {
+            $authController->logout();
+        }
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'resend_verification') {
+            $message = $authController->resend_verification();
+
+            $_SESSION['status'] = $message['status'];
+            $_SESSION['message'] = $message['message'];
+
+            if ($message['location'] == 'login') {
+                header('Location: ?page=login');
+            } else {
+                header('Location: ?page=register');
+            }
+            exit();
+        }
+        include './src/views/auth/resend_verification.php';
         break;
 
         # LOGIN

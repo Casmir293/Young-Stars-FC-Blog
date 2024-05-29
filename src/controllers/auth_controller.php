@@ -155,6 +155,25 @@ class AuthController
         }
     }
 
+    # RESEND EMAIL VERIFICATION
+    public function resend_verification()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $email = trim($_POST['email']);
+            $result = $this->auth->resend_verification($email);
+
+            if ($result['status']) {
+                $username = $result['username'];
+                $email = $result['email'];
+                $token = $result['token'];
+                $this->send_email_verification($username, $email, $token);
+                return ['status' => true, 'message' => 'Verification link has been sent to your email.'];
+            } else {
+                return $result;
+            }
+        }
+    }
+
     # LOGIN
     public function login()
     {
@@ -166,6 +185,7 @@ class AuthController
         }
     }
 
+    # LOGOUT
     public function logout()
     {
         $_SESSION = array();
