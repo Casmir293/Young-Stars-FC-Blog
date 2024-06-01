@@ -143,12 +143,18 @@ switch ($page) {
         include './src/views/auth/login.php';
         break;
 
+        # LOGOUT
     case 'logout':
         $message = $authController->logout();
         $_SESSION['status'] = $message['status'];
         $_SESSION['message'] = 'Logout successful';
         header('Location: ?page=login');
         exit();
+
+        # CREATE POST
+    case 'create_post':
+        include './src/views/posts/create.php';
+        break;
 
     case 'view_post':
         $postId = intval($_GET['id']);

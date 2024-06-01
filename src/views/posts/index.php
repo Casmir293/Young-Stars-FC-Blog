@@ -16,9 +16,12 @@ if (!defined('ROOT_PATH')) {
 </head>
 
 <body>
-    <?php include_once(ROOT_PATH . '/src/views/templates/header.php'); ?>
-    <!-- <?php include_once(ROOT_PATH . '/src/views/templates/unauthorized_header.php'); ?> -->
-    <?php include_once(ROOT_PATH . '/src/views/templates/bootstrap_js.php'); ?>
+    <?php if (isset($_SESSION['id'])) {
+        include_once(ROOT_PATH . '/src/views/templates/header.php');
+    } else {
+        include_once(ROOT_PATH . '/src/views/templates/unauthorized_header.php');
+    } ?>
+
     <?php if (isset($_SESSION['message'])) {
         echo "<div class='alertContainer alert alert-success' role='alert' id='success-toast' onload='successAlert()'>" . htmlspecialchars($_SESSION['message']) . "</div>";
         unset($_SESSION['message']);
@@ -30,55 +33,55 @@ if (!defined('ROOT_PATH')) {
             <div class="row ">
                 <div class="col-12 col-md-6 col-lg-3 d-flex justify-content-center p-2">
                     <div class="card" style="width: 20rem; height: 27rem;">
-                        <img src="https://www.heart.org/-/media/Images/News/SFTH/Archive/1019SFTHCixGreene_SC.jpg" class="card-img-top" alt="...">
+                        <img src="https://www.heart.org/-/media/Images/News/SFTH/Archive/1019SFTHCixGreene_SC.jpg" style="height: 235px; object-fit:cover" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 class="card-title">Card title</h5>
                             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                            <a href="#" class="btn btn-primary">Read more</a>
                         </div>
                     </div>
                 </div>
 
                 <div class="col-12 col-md-6 col-lg-3 d-flex justify-content-center p-2">
                     <div class="card" style="width: 20rem; height: 27rem;">
-                        <img src="https://www.warnermusic.de/uploads/media/image-1002-704/07/17647-burna_4.jpg?v=2-0" class="card-img-top" alt="...">
+                        <img src="https://www.warnermusic.de/uploads/media/image-1002-704/07/17647-burna_4.jpg?v=2-0" style="height: 235px; object-fit:cover" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 class="card-title">Card title</h5>
                             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                            <a href="#" class="btn btn-primary">Read more</a>
                         </div>
                     </div>
                 </div>
 
                 <div class="col-12 col-md-6 col-lg-3 d-flex justify-content-center p-2">
                     <div class="card" style="width: 20rem; height: 27rem;">
-                        <img src="https://www.heart.org/-/media/Images/News/SFTH/Archive/1019SFTHCixGreene_SC.jpg" class="card-img-top" alt="...">
+                        <img src="https://www.heart.org/-/media/Images/News/SFTH/Archive/1019SFTHCixGreene_SC.jpg" style="height: 235px; object-fit:cover" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 class="card-title">Card title</h5>
                             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                            <a href="#" class="btn btn-primary">Read more</a>
                         </div>
                     </div>
                 </div>
 
                 <div class="col-12 col-md-6 col-lg-3 d-flex justify-content-center p-2">
                     <div class="card" style="width: 20rem; height: 27rem;">
-                        <img src="https://www.warnermusic.de/uploads/media/image-1002-704/07/17647-burna_4.jpg?v=2-0" class="card-img-top" alt="...">
+                        <img src="https://www.warnermusic.de/uploads/media/image-1002-704/07/17647-burna_4.jpg?v=2-0" style="height: 235px; object-fit:cover" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 class="card-title">Card title</h5>
                             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                            <a href="#" class="btn btn-primary">Read more</a>
                         </div>
                     </div>
                 </div>
 
                 <div class="col-12 col-md-6 col-lg-3 d-flex justify-content-center p-2">
                     <div class="card" style="width: 20rem; height: 27rem;">
-                        <img src="https://www.warnermusic.de/uploads/media/image-1002-704/07/17647-burna_4.jpg?v=2-0" class="card-img-top" alt="...">
+                        <img src="https://www.warnermusic.de/uploads/media/image-1002-704/07/17647-burna_4.jpg?v=2-0" style="height: 235px; object-fit:cover" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 class="card-title">Card title</h5>
                             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                            <a href="#" class="btn btn-primary">Read more</a>
                         </div>
                     </div>
                 </div>
@@ -86,7 +89,7 @@ if (!defined('ROOT_PATH')) {
         </div>
     </section>
 
-
+    <?php include_once(ROOT_PATH . '/src/views/templates/bootstrap_js.php'); ?>
 </body>
 
 </html>
