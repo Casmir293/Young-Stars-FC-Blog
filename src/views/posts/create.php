@@ -35,7 +35,18 @@ if (!defined('ROOT_PATH')) {
                 <form method="POST" action="?page=create_post&action=create_post" onsubmit="loadButton()">
                     <div class="mb-3">
                         <label class="form-label fw-bold">Image <span class="text-danger">*</span></label>
-                        <img role="button" src="https://jacquipaterson.com/wp-content/uploads/2018/05/shutterstock_385167373.jpg" alt="" style="width: 100%; height:150px; object-fit:cover;">
+
+                        <input type="file" id="imageInput" name="image" class="d-none" accept="image/*">
+                        <img id="imagePreview" class="mb-3" src="#" alt="" style="width: 100%; height: 150px; object-fit: cover; display: none;">
+                        <div role="button" class="upload-img d-flex align-items-center flex-column border rounded border-primary">
+                            <div class="py-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="blue" class="bi bi-upload" viewBox="0 0 16 16">
+                                    <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5" />
+                                    <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708z" />
+                                </svg>
+                            </div>
+                            <p class="text-primary">Upload Img</p>
+                        </div>
                     </div>
 
                     <div class="mb-3">
@@ -75,12 +86,8 @@ if (!defined('ROOT_PATH')) {
             </section>
         </section>
     </section>
-
-
-
-
-
     <?php include_once(ROOT_PATH . '/src/views/templates/bootstrap_js.php'); ?>
+    <script src="src/views/posts/posts.js"></script>
 </body>
 
 </html>
