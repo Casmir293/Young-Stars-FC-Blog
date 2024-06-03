@@ -6,6 +6,7 @@ require_once './src/controllers/auth_controller.php';
 require_once './src/controllers/post_controller.php';
 
 $authController = new AuthController($pdo);
+$postController = new PostController($pdo);
 
 $page = isset($_GET['page']) ? $_GET['page'] : 'home';
 $action = isset($_GET['action']) ? $_GET['action'] : null;
@@ -153,12 +154,25 @@ switch ($page) {
 
         # CREATE POST
     case 'create_post':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'create_post') {
+            $message = $postController->create();
+
+            $_SESSION['status'] = $message['status'];
+            $_SESSION['message'] = $message['message'];
+
+            if ($message['status']) {
+                header('Location: index.php');
+            } else {
+                header('Location: ?page=create_post');
+            }
+            exit();
+        }
         include './src/views/posts/create.php';
         break;
 
     case 'view_post':
         $postId = intval($_GET['id']);
-        $post = $postController->getPost($postId);
+        // $post = $postController->getPost($postId);
         include './src/views/posts/view.php'; // Display the single post view
         break;
 

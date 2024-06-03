@@ -12,7 +12,6 @@ if (!defined('ROOT_PATH')) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Young Stars FC</title>
     <link rel="stylesheet" href="src/views/posts/posts.css">
-
     <?php include_once(ROOT_PATH . '/src/views/templates/bootstrap_css.php'); ?>
 </head>
 
@@ -31,12 +30,10 @@ if (!defined('ROOT_PATH')) {
     <section class="container outer-wrapper">
         <section class="wrapper p-5 shadow-lg">
             <section>
-
-                <form method="POST" action="?page=create_post&action=create_post" onsubmit="loadButton()">
+                <form method="POST" action="?page=create_post&action=create_post" onsubmit="loadButton()" enctype="multipart/form-data">
                     <div class="mb-3">
                         <label class="form-label fw-bold">Image <span class="text-danger">*</span></label>
-
-                        <input type="file" id="imageInput" name="image" class="d-none" accept="image/*">
+                        <input type="file" id="imageInput" name="image" class="d-none" accept="image/*" required>
                         <img id="imagePreview" class="mb-3" src="#" alt="" style="width: 100%; height: 150px; object-fit: cover; display: none;">
                         <div role="button" class="upload-img d-flex align-items-center flex-column border rounded border-primary">
                             <div class="py-2">
@@ -62,16 +59,16 @@ if (!defined('ROOT_PATH')) {
                     <div class="mb-5">
                         <label class="form-label fw-bold">Category <span class="text-danger">*</span></label>
                         <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
-                            <input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off">
+                            <input type="checkbox" class="btn-check" name="categories[]" value="Updates" id="btncheck1" autocomplete="off">
                             <label class="btn btn-outline-primary" for="btncheck1">Updates</label>
 
-                            <input type="checkbox" class="btn-check" id="btncheck2" autocomplete="off">
+                            <input type="checkbox" class="btn-check" name="categories[]" value="Tournament" id="btncheck2" autocomplete="off">
                             <label class="btn btn-outline-primary" for="btncheck2">Tournament</label>
 
-                            <input type="checkbox" class="btn-check" id="btncheck3" autocomplete="off">
+                            <input type="checkbox" class="btn-check" name="categories[]" value="Fun" id="btncheck3" autocomplete="off">
                             <label class="btn btn-outline-primary" for="btncheck3">Fun</label>
 
-                            <input type="checkbox" class="btn-check" id="btncheck4" autocomplete="off">
+                            <input type="checkbox" class="btn-check" name="categories[]" value="Others" id="btncheck4" autocomplete="off">
                             <label class="btn btn-outline-primary" for="btncheck4">Others</label>
                         </div>
                     </div>
