@@ -13,6 +13,25 @@ if (!defined('ROOT_PATH')) {
     <title>Young Stars FC</title>
     <?php include_once(ROOT_PATH . '/src/views/templates/bootstrap_css.php'); ?>
     <link rel="stylesheet" href="assets/css/style.css">
+
+    <style>
+        .card-title {
+            height: 40px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .card-text {
+            height: 60px;
+            font-size: 0.75rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+        }
+    </style>
 </head>
 
 <body>
