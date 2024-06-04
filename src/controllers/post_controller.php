@@ -5,9 +5,9 @@ class PostController
 {
     private $postModel;
 
-    public function __construct($postModel)
+    public function __construct($pdo)
     {
-        $this->postModel = $postModel;
+        $this->postModel = new Post($pdo);
     }
 
     public function create()

@@ -59,16 +59,16 @@ if (!defined('ROOT_PATH')) {
                     <div class="mb-5">
                         <label class="form-label fw-bold">Category <span class="text-danger">*</span></label>
                         <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
-                            <input type="checkbox" class="btn-check" name="categories[]" value="Updates" id="btncheck1" autocomplete="off">
+                            <input type="checkbox" class="btn-check" name="categories[]" value="updates" id="btncheck1" autocomplete="off">
                             <label class="btn btn-outline-primary" for="btncheck1">Updates</label>
 
-                            <input type="checkbox" class="btn-check" name="categories[]" value="Tournament" id="btncheck2" autocomplete="off">
+                            <input type="checkbox" class="btn-check" name="categories[]" value="tournament" id="btncheck2" autocomplete="off">
                             <label class="btn btn-outline-primary" for="btncheck2">Tournament</label>
 
-                            <input type="checkbox" class="btn-check" name="categories[]" value="Fun" id="btncheck3" autocomplete="off">
+                            <input type="checkbox" class="btn-check" name="categories[]" value="fun" id="btncheck3" autocomplete="off">
                             <label class="btn btn-outline-primary" for="btncheck3">Fun</label>
 
-                            <input type="checkbox" class="btn-check" name="categories[]" value="Others" id="btncheck4" autocomplete="off">
+                            <input type="checkbox" class="btn-check" name="categories[]" value="others" id="btncheck4" autocomplete="off">
                             <label class="btn btn-outline-primary" for="btncheck4">Others</label>
                         </div>
                     </div>
