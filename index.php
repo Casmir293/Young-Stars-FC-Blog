@@ -170,8 +170,8 @@ switch ($page) {
         include './src/views/posts/create.php';
         break;
 
-    case 'view_post':
-        $postId = intval($_GET['id']);
+    case 'single_post':
+        // $postId = intval($_GET['id']);
         // $post = $postController->getPost($postId);
         include './src/views/posts/view.php'; // Display the single post view
         break;
@@ -179,6 +179,7 @@ switch ($page) {
         // Add more cases for other actions like posting, editing, etc.
 
     default:
+        $posts = $postController->view_all_posts();
         include './src/views/posts/index.php';
         break;
 }

@@ -30,61 +30,23 @@ if (!defined('ROOT_PATH')) {
 
     <section>
         <div class="container">
-            <div class="row ">
-                <div class="col-12 col-md-6 col-lg-3 d-flex justify-content-center p-2">
-                    <div class="card" style="width: 20rem; height: 27rem;">
-                        <img src="https://www.heart.org/-/media/Images/News/SFTH/Archive/1019SFTHCixGreene_SC.jpg" style="height: 235px; object-fit:cover" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <a href="#" class="btn btn-primary">Read more</a>
+            <div class="row">
+                <?php if (isset($posts) && !empty($posts)) : ?>
+                    <?php foreach ($posts as $post) : ?>
+                        <div class="col-12 col-md-6 col-lg-3 d-flex justify-content-center p-2">
+                            <div class="card" style="width: 20rem; height: 27rem;">
+                                <img src="<?= htmlspecialchars($post['image']) ?>" style="height: 235px; object-fit:cover" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <h5 class="card-title"><?= htmlspecialchars($post['title']) ?></h5>
+                                    <p class="card-text"><?= htmlspecialchars($post['content']) ?></p>
+                                    <a href="#" class="btn btn-primary">Read more</a>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-6 col-lg-3 d-flex justify-content-center p-2">
-                    <div class="card" style="width: 20rem; height: 27rem;">
-                        <img src="https://www.warnermusic.de/uploads/media/image-1002-704/07/17647-burna_4.jpg?v=2-0" style="height: 235px; object-fit:cover" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <a href="#" class="btn btn-primary">Read more</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-6 col-lg-3 d-flex justify-content-center p-2">
-                    <div class="card" style="width: 20rem; height: 27rem;">
-                        <img src="https://www.heart.org/-/media/Images/News/SFTH/Archive/1019SFTHCixGreene_SC.jpg" style="height: 235px; object-fit:cover" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <a href="#" class="btn btn-primary">Read more</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-6 col-lg-3 d-flex justify-content-center p-2">
-                    <div class="card" style="width: 20rem; height: 27rem;">
-                        <img src="https://www.warnermusic.de/uploads/media/image-1002-704/07/17647-burna_4.jpg?v=2-0" style="height: 235px; object-fit:cover" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <a href="#" class="btn btn-primary">Read more</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-6 col-lg-3 d-flex justify-content-center p-2">
-                    <div class="card" style="width: 20rem; height: 27rem;">
-                        <img src="https://www.warnermusic.de/uploads/media/image-1002-704/07/17647-burna_4.jpg?v=2-0" style="height: 235px; object-fit:cover" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <a href="#" class="btn btn-primary">Read more</a>
-                        </div>
-                    </div>
-                </div>
+                    <?php endforeach; ?>
+                <?php else : ?>
+                    <p>No posts available.</p>
+                <?php endif; ?>
             </div>
         </div>
     </section>

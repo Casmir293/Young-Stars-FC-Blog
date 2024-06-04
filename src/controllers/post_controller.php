@@ -32,4 +32,10 @@ class PostController
             return $result;
         }
     }
+
+    public function view_all_posts()
+    {
+        $posts = $this->postModel->get_all_posts();
+        return $posts;
+    }
 }

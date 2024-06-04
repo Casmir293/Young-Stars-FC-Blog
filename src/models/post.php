@@ -22,4 +22,12 @@ class Post
             return ['status' => false, 'message' => 'Failed to create post.'];
         }
     }
+
+    # GET ALL POSTS
+    public function get_all_posts()
+    {
+        $stmt = $this->pdo->prepare("SELECT posts.*, users.username FROM posts JOIN users ON posts.user_id = users.id ORDER BY created_at DESC");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
