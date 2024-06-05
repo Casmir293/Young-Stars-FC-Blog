@@ -46,7 +46,6 @@ class PostController
             $post = $this->postModel->get_post_by_id($id);
 
             if ($post) {
-                [$_SESSION['status'] => true];
                 require(ROOT_PATH . '/src/views/posts/view.php');
             } else {
                 header('Location: index.php');

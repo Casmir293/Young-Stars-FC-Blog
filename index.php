@@ -172,7 +172,6 @@ switch ($page) {
 
     case 'view_post':
         $post = $postController->view();
-
         break;
 
         // Add more cases for other actions like posting, editing, etc.

@@ -24,9 +24,14 @@ if (!defined('ROOT_PATH')) {
             background: #f8f9fa;
             margin-top: 50px;
             margin-bottom: 20px;
-            padding: 20px;
             border-radius: 8px;
-            max-width: 1000px;
+            width: 1000px;
+        }
+
+        @media only screen and (min-width: 600px) {
+            .wrap {
+                padding: 48px !important;
+            }
         }
     </style>
 </head>
@@ -38,18 +43,23 @@ if (!defined('ROOT_PATH')) {
         include_once(ROOT_PATH . '/src/views/templates/unauthorized_header.php');
     } ?>
 
-    <?php if (isset($_SESSION['message'])) {
-        echo "<div class='alertContainer alert alert-success' role='alert' id='success-toast' onload='successAlert()'>" . htmlspecialchars($_SESSION['message']) . "</div>";
+    <?php if (isset($_SESSION['message']) && $_SESSION['status']) {
+        echo "<div class='alertContainer alert alert-success' role='alert'>" . htmlspecialchars($_SESSION['message']) . "</div>";
         unset($_SESSION['message']);
+        unset($_SESSION['status']);
+    } else if (isset($_SESSION['message']) && !$_SESSION['status']) {
+        echo "<div class='alertContainer alert alert-danger' role='alert'>" . htmlspecialchars($_SESSION['message']) . "</div>";
+        unset($_SESSION['message']);
+        unset($_SESSION['status']);
     } ?>
     <!--  -->
 
     <section class="container">
         <section class=" outer-wrap my-5">
-            <div class="wrap p-5 shadow-lg">
+            <div class="wrap p-3 shadow-lg">
                 <p class="text-secondary fw-lighter">Posted by Admin <?= htmlspecialchars($post['created_at']) ?></p>
-                <div>
-                    <img src="<?= htmlspecialchars($post['image']) ?>" alt="" class="rounded-3" style="width: 100%; height: auto; object-fit: cover;">
+                <div class="d-flex justify-content-center ">
+                    <img src="<?= htmlspecialchars($post['image']) ?>" alt="" class="rounded-3" style="width: 100%; height: 400px; object-fit: cover;">
                 </div>
                 <div>
                     <svg role="button" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
