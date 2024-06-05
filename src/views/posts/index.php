@@ -49,7 +49,7 @@ if (!defined('ROOT_PATH')) {
 
     <section>
         <div class="container">
-            <div class="row">
+            <div class="row" style="margin-top: 70px;">
                 <?php if (isset($posts) && !empty($posts)) : ?>
                     <?php foreach ($posts as $post) : ?>
                         <div class="col-12 col-md-6 col-lg-3 d-flex justify-content-center p-2">
@@ -58,7 +58,7 @@ if (!defined('ROOT_PATH')) {
                                 <div class="card-body">
                                     <h5 class="card-title"><?= htmlspecialchars($post['title']) ?></h5>
                                     <p class="card-text"><?= htmlspecialchars($post['content']) ?></p>
-                                    <a href="#" class="btn btn-primary">Read more</a>
+                                    <a href="?page=view_post&id=<?= htmlspecialchars($post['id']) ?>" class="btn btn-primary">Read more</a>
                                 </div>
                             </div>
                         </div>
