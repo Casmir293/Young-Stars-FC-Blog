@@ -38,4 +38,23 @@ class PostController
         $posts = $this->postModel->get_all_posts();
         return $posts;
     }
+
+    public function view()
+    {
+        if (isset($_GET['id'])) {
+            $id = intval($_GET['id']);
+            $post = $this->postModel->get_post_by_id($id);
+
+            if ($post) {
+                [$_SESSION['status'] => true];
+                require(ROOT_PATH . '/src/views/posts/view.php');
+            } else {
+                header('Location: index.php');
+                return [$_SESSION['status'] = false, $_SESSION['message'] = 'Post not found.'];
+            }
+        } else {
+            header('Location: index.php');
+            return [$_SESSION['status'] = false, $_SESSION['message'] = 'Invalid request.'];
+        }
+    }
 }

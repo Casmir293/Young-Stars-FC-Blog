@@ -30,4 +30,12 @@ class Post
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    # GET SINGLE POST
+    public function get_post_by_id($id)
+    {
+        $stmt = $this->pdo->prepare("SELECT * FROM posts WHERE id = '$id'");
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 }

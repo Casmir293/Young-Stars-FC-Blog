@@ -171,9 +171,8 @@ switch ($page) {
         break;
 
     case 'view_post':
-        // $postId = intval($_GET['id']);
-        // $post = $postController->getPost($postId);
-        include './src/views/posts/view.php'; // Display the single post view
+        $post = $postController->view();
+
         break;
 
         // Add more cases for other actions like posting, editing, etc.

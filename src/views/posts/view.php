@@ -47,9 +47,9 @@ if (!defined('ROOT_PATH')) {
     <section class="container">
         <section class=" outer-wrap my-5">
             <div class="wrap p-5 shadow-lg">
-                <p class="text-secondary fw-lighter">Posted by Admin 05-06-24</p>
+                <p class="text-secondary fw-lighter">Posted by Admin <?= htmlspecialchars($post['created_at']) ?></p>
                 <div>
-                    <img src="https://i.guim.co.uk/img/media/f8f5916aea4a3f33ca1fa1e36a2113709123e5db/0_90_3234_1941/master/3234.jpg?width=700&quality=85&auto=format&fit=max&s=2d8d24dfa345b3c47f75afa74339622d" alt="" class="rounded-3" style="width: 100%; height: auto; object-fit: cover;">
+                    <img src="<?= htmlspecialchars($post['image']) ?>" alt="" class="rounded-3" style="width: 100%; height: auto; object-fit: cover;">
                 </div>
                 <div>
                     <svg role="button" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
@@ -61,14 +61,10 @@ if (!defined('ROOT_PATH')) {
                     <span>2</span>
                 </div>
 
-                <h5 class="my-4">This is the post title</h5>
+                <h5 class="my-4"><?= htmlspecialchars($post['title']) ?></h5>
 
                 <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti aperiam temporibus molestias dicta ipsum distinctio, aut corrupti perspiciatis eligendi minus ab blanditiis, minima eveniet fugiat, perferendis aliquam culpa? Quae, sequi?
-
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti aperiam temporibus molestias dicta ipsum distinctio, aut corrupti perspiciatis eligendi minus ab blanditiis, minima eveniet fugiat, perferendis aliquam culpa? Quae, sequi?
-
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti aperiam temporibus molestias dicta ipsum distinctio, aut corrupti perspiciatis eligendi minus ab blanditiis, minima eveniet fugiat, perferendis aliquam culpa? Quae, sequi?
+                    <?= nl2br(htmlspecialchars($post['content'])) ?>
                 </p>
                 <hr class="mb-5">
                 <div class="form-floating">

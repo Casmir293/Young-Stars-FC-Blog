@@ -41,9 +41,14 @@ if (!defined('ROOT_PATH')) {
         include_once(ROOT_PATH . '/src/views/templates/unauthorized_header.php');
     } ?>
 
-    <?php if (isset($_SESSION['message'])) {
-        echo "<div class='alertContainer alert alert-success' role='alert' id='success-toast' onload='successAlert()'>" . htmlspecialchars($_SESSION['message']) . "</div>";
+    <?php if (isset($_SESSION['message']) && $_SESSION['status']) {
+        echo "<div class='alertContainer alert alert-success' role='alert'>" . htmlspecialchars($_SESSION['message']) . "</div>";
         unset($_SESSION['message']);
+        unset($_SESSION['status']);
+    } else if (isset($_SESSION['message']) && !$_SESSION['status']) {
+        echo "<div class='alertContainer alert alert-danger' role='alert'>" . htmlspecialchars($_SESSION['message']) . "</div>";
+        unset($_SESSION['message']);
+        unset($_SESSION['status']);
     } ?>
     <!--  -->
 
