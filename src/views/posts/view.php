@@ -87,10 +87,11 @@ if (!defined('ROOT_PATH')) {
             </div>
 
         </section>
-        <footer class="my-2 text-center">this is the footer</footer>
     </section>
-
     <?php include_once(ROOT_PATH . '/src/views/templates/bootstrap_js.php'); ?>
+    <?php
+    include_once(ROOT_PATH . '/src/views/templates/footer.php');
+    ?>
 </body>
 
 </html>

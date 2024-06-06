@@ -84,6 +84,9 @@ if (!defined('ROOT_PATH')) {
         </section>
     </section>
     <?php include_once(ROOT_PATH . '/src/views/templates/bootstrap_js.php'); ?>
+    <?php
+    include_once(ROOT_PATH . '/src/views/templates/footer.php');
+    ?>
     <script src="src/views/posts/posts.js"></script>
 </body>
 

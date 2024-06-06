@@ -41,6 +41,9 @@
         </div>
     </section>
     <?php include_once(ROOT_PATH . '/src/views/templates/bootstrap_js.php'); ?>
+    <?php
+    include_once(ROOT_PATH . '/src/views/templates/footer.php');
+    ?>
     <!-- <script src="src/views/auth/auth.js"></script> -->
     <script src="assets/js/app.js"></script>
 </body>
