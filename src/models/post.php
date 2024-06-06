@@ -13,7 +13,8 @@ class Post
     # CREATE POST
     public function create_post($user_id, $image_path, $title, $content, $categories)
     {
-        $stmt = $this->pdo->prepare("INSERT INTO posts (user_id, image, title, content, categories) VALUES ('$user_id', '$image_path', '$title', '$content', '$categories')");
+        $categories_str = implode(',', $categories);
+        $stmt = $this->pdo->prepare("INSERT INTO posts (user_id, image, title, content, categories) VALUES ('$user_id', '$image_path', '$title', '$content', '$categories_str')");
         $post = $stmt->execute();
 
         if ($post) {
@@ -34,7 +35,7 @@ class Post
     # GET ALL POSTS BY CATEGORY
     public function get_posts_by_category($category)
     {
-        $stmt = $this->pdo->prepare("SELECT posts.*, users.username FROM posts JOIN users ON posts.user_id = users.id WHERE categories = ? ORDER BY created_at DESC");
+        $stmt = $this->pdo->prepare("SELECT posts.*, users.username FROM posts JOIN users ON posts.user_id = users.id WHERE FIND_IN_SET(?, categories) ORDER BY created_at DESC");
         $stmt->execute([$category]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
