@@ -23,11 +23,11 @@ if (!defined('ROOT_PATH')) {
                         Category
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">All</a></li>
-                        <li><a class="dropdown-item" href="#">Updates</a></li>
-                        <li><a class="dropdown-item" href="#">Tournament</a></li>
-                        <li><a class="dropdown-item" href="#">Fun</a></li>
-                        <li><a class="dropdown-item" href="#">Others</a></li>
+                        <li><a class="dropdown-item" href="index.php">All</a></li>
+                        <li><a class="dropdown-item" href="?category=updates">Updates</a></li>
+                        <li><a class="dropdown-item" href="?category=tournament">Tournament</a></li>
+                        <li><a class="dropdown-item" href="?category=fun">Fun</a></li>
+                        <li><a class="dropdown-item" href="?category=others">Others</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">

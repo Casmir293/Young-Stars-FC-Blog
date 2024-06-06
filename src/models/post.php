@@ -31,6 +31,14 @@ class Post
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    # GET ALL POSTS BY CATEGORY
+    public function get_posts_by_category($category)
+    {
+        $stmt = $this->pdo->prepare("SELECT posts.*, users.username FROM posts JOIN users ON posts.user_id = users.id WHERE categories = ? ORDER BY created_at DESC");
+        $stmt->execute([$category]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     # GET SINGLE POST
     public function get_post_by_id($id)
     {

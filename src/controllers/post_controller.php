@@ -33,10 +33,13 @@ class PostController
         }
     }
 
-    public function view_all_posts()
+    public function view_all_posts($category = null)
     {
-        $posts = $this->postModel->get_all_posts();
-        return $posts;
+        if ($category) {
+            return $this->postModel->get_posts_by_category($category);
+        } else {
+            return $this->postModel->get_all_posts();
+        }
     }
 
     public function view()

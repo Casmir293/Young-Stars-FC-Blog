@@ -9,6 +9,7 @@ $authController = new AuthController($pdo);
 $postController = new PostController($pdo);
 
 $page = isset($_GET['page']) ? $_GET['page'] : 'home';
+$category = isset($_GET['category']) ? $_GET['category'] : null;
 $action = isset($_GET['action']) ? $_GET['action'] : null;
 
 switch ($page) {
@@ -177,7 +178,7 @@ switch ($page) {
         // Add more cases for other actions like posting, editing, etc.
 
     default:
-        $posts = $postController->view_all_posts();
+        $posts = $postController->view_all_posts($category);
         include './src/views/posts/index.php';
         break;
 }
