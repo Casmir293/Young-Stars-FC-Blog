@@ -43,8 +43,8 @@ if (!defined('ROOT_PATH')) {
                     <button class="btn btn-outline-light my-2" type="submit">Logout</button>
                 </li>
             </ul>
-            <form class="d-flex align-items-center" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <form class="d-flex align-items-center" role="search" action="index.php" method="GET">
+                <input class="form-control me-2" type="search" name="search" placeholder="Search" maxlength="15" aria-label="Search" required>
                 <button class="btn btn-outline-light" type="submit">Search</button>
                 <img src="./assets/images/profile.jpg" alt="profile-img" class="profile-pic ">
                 <a href="?page=logout">

@@ -47,4 +47,13 @@ class Post
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    # SEARCH POSTS 
+    public function search_posts($search_query)
+    {
+        $stmt = $this->pdo->prepare("SELECT posts.*, users.username FROM posts JOIN users ON posts.user_id = users.id WHERE posts.title LIKE ? OR posts.content LIKE ? ORDER BY created_at DESC");
+        $search_term = '%' . $search_query . '%';
+        $stmt->execute([$search_term, $search_term]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

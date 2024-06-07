@@ -33,14 +33,17 @@ class PostController
         }
     }
 
-    public function view_all_posts($category = null)
+    public function view_all_posts($category = null, $search_query = null)
     {
-        if ($category) {
+        if ($search_query) {
+            return $this->postModel->search_posts($search_query);
+        } else if ($category) {
             return $this->postModel->get_posts_by_category($category);
         } else {
             return $this->postModel->get_all_posts();
         }
     }
+
 
     public function view()
     {

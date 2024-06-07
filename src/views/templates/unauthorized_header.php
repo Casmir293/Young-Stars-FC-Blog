@@ -22,10 +22,10 @@
                     </ul>
                 </li>
             </ul>
-            <form class="d-flex" role="search">
+            <form class="d-flex" role="search" action="index.php" method="GET">
                 <button type="button" class="btn btn-outline-light"><a href="?page=register" class="text-dark text-decoration-none">Register</a></button>
                 <button type="button" class="btn btn-outline-light mx-2"><a href="?page=login" class="text-dark text-decoration-none">Login</a></button>
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <input class="form-control me-2" type="search" name="search" placeholder="Search" maxlength="15" aria-label="Search" required>
                 <button class="btn btn-outline-light" type="submit">Search</button>
             </form>
         </div>
