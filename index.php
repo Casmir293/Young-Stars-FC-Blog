@@ -176,6 +176,10 @@ switch ($page) {
         $post = $postController->view();
         break;
 
+    case 'profile':
+        include './src/views/user/index.php';
+        break;
+
         // Add more cases for other actions like posting, editing, etc.
 
     default:
