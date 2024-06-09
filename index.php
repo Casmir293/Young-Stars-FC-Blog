@@ -4,9 +4,11 @@ define('ROOT_PATH', __DIR__);
 require_once './config/db.php';
 require_once './src/controllers/auth_controller.php';
 require_once './src/controllers/post_controller.php';
+require_once './src/controllers/user_controller.php';
 
 $authController = new AuthController($pdo);
 $postController = new PostController($pdo);
+$userController = new UserController($pdo);
 
 $page = isset($_GET['page']) ? $_GET['page'] : 'home';
 $category = isset($_GET['category']) ? $_GET['category'] : null;
@@ -177,6 +179,7 @@ switch ($page) {
         break;
 
     case 'profile':
+        $user_details = $userController->view_user_profile();
         include './src/views/user/index.php';
         break;
 

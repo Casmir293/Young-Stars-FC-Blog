@@ -41,16 +41,16 @@
 
     <section class="container outer-wrapper">
         <div class="wrapper p-5 shadow-lg">
-            <p class="text-center fw-bold">Admin | Editor | Member</p>
+            <p class="text-center fw-bold"><?= htmlspecialchars(ucfirst($user_details['privilege'])) ?></p>
             <div class="d-flex flex-column align-items-center">
                 <input type="file" id="imageInput" name="image" class="d-none" accept="image/*" required>
-                <img id="imagePreview" class="rounded" src="https://www.parentmap.com/images/article/7877/BOY_feature_credit_will_austin_848x1200.jpg" alt="avatar" style="width: 100px; height: 150px; object-fit: cover;">
+                <img id="imagePreview" class="rounded" src="<?= htmlspecialchars($user_details['avatar']) ?>" alt="avatar" style="width: 100px; height: 150px; object-fit: cover;">
                 <div role="button" class="upload-img rounded-pill  bg-secondary py-1 px-3 mt-2 text-light">upload</div>
             </div>
             <div class="mt-3">
-                <p><b>Email</b>: casmir293@gmail.com</p>
-                <p><b>Username</b>: casmir293</p>
-                <p><b>Member since</b>: 2024-05-23</p>
+                <p><b>Email</b>: <?= htmlspecialchars($user_details['email']) ?></p>
+                <p><b>Username</b>: <?= htmlspecialchars($user_details['username']) ?></p>
+                <p><b>Member since</b>: <?= htmlspecialchars($user_details['created_at']) ?></p>
 
                 <button id="submit-form" type="submit" class="btn btn-primary w-50">Save Photo</button>
 
