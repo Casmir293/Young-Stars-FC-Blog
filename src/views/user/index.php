@@ -7,6 +7,19 @@
     <title>Young Stars FC</title>
     <?php include_once(ROOT_PATH . '/src/views/templates/bootstrap_css.php'); ?>
     <link rel="stylesheet" href="src/views/user/user.css">
+    <style>
+        .outer-wrapper {
+            margin-top: 230px;
+            margin-bottom: 250px;
+        }
+
+        @media only screen and (min-width: 600px) {
+            .outer-wrapper {
+                margin-top: 90px;
+                margin-bottom: 110px;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -25,12 +38,13 @@
         unset($_SESSION['message']);
         unset($_SESSION['status']);
     } ?>
+
     <section class="container outer-wrapper">
         <div class="wrapper p-5 shadow-lg">
             <p class="text-center fw-bold">Admin | Editor | Member</p>
             <div class="d-flex flex-column align-items-center">
                 <img class="rounded" src="https://www.parentmap.com/images/article/7877/BOY_feature_credit_will_austin_848x1200.jpg" style="width: 100px; height:150px;" alt="">
-                <div role="button" class="rounded-pill  bg-secondary py-1 px-3 mt-2 text-light">+ add img</div>
+                <div role="button" class="rounded-pill  bg-secondary py-1 px-3 mt-2 text-light">upload</div>
             </div>
             <div class="mt-3">
                 <p><b>Email</b>: casmir293@gmail.com</p>
@@ -43,10 +57,6 @@
                     <span class="spinner-grow spinner-grow-sm" aria-hidden="true"></span>
                     <span role="status">Loading...</span>
                 </button>
-                <div class="form-check form-switch my-3">
-                    <label class="form-check-label  text-primary" for="flexSwitchCheckDefault">Change password?</label>
-                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
-                </div>
                 <hr>
                 <h6 class="text-center"><b>Update Password</b></h6>
                 <form action="">
@@ -75,9 +85,12 @@
         </div>
     </section>
     <?php include_once(ROOT_PATH . '/src/views/templates/bootstrap_js.php'); ?>
-    <?php
-    include_once(ROOT_PATH . '/src/views/templates/footer.php');
-    ?>
+    <div class="fixed-bottom">
+        <?php
+        include_once(ROOT_PATH . '/src/views/templates/footer.php');
+        ?>
+    </div>
+
     <script src="src/views/auth/auth.js"></script>
 </body>
 

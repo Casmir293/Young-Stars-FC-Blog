@@ -1,4 +1,5 @@
     .outer-wrapper {
+        margin-top: 230px;
         display: flex;
         justify-content: center;
         height: 94vh;
