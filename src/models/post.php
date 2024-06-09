@@ -13,6 +13,10 @@ class Post
     # CREATE POST
     public function create_post($user_id, $image_path, $title, $content, $categories)
     {
+        if (!is_array($categories)) {
+            $categories = [$categories];
+        }
+
         $categories_str = implode(',', $categories);
         $stmt = $this->pdo->prepare("INSERT INTO posts (user_id, image, title, content, categories) VALUES ('$user_id', '$image_path', '$title', '$content', '$categories_str')");
         $post = $stmt->execute();
