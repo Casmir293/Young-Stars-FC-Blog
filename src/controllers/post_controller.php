@@ -20,7 +20,7 @@ class PostController
 
             // Handle file upload
             $image = $_FILES['image']['name'];
-            $target = "uploads/" . basename($image);
+            $target = "assets/images/posts/" . basename($image);
             if (move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
                 $image_path = $target;
             } else {

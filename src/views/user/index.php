@@ -43,8 +43,9 @@
         <div class="wrapper p-5 shadow-lg">
             <p class="text-center fw-bold">Admin | Editor | Member</p>
             <div class="d-flex flex-column align-items-center">
-                <img class="rounded" src="https://www.parentmap.com/images/article/7877/BOY_feature_credit_will_austin_848x1200.jpg" style="width: 100px; height:150px;" alt="">
-                <div role="button" class="rounded-pill  bg-secondary py-1 px-3 mt-2 text-light">upload</div>
+                <input type="file" id="imageInput" name="image" class="d-none" accept="image/*" required>
+                <img id="imagePreview" class="rounded" src="https://www.parentmap.com/images/article/7877/BOY_feature_credit_will_austin_848x1200.jpg" alt="avatar" style="width: 100px; height: 150px; object-fit: cover;">
+                <div role="button" class="upload-img rounded-pill  bg-secondary py-1 px-3 mt-2 text-light">upload</div>
             </div>
             <div class="mt-3">
                 <p><b>Email</b>: casmir293@gmail.com</p>
@@ -73,9 +74,9 @@
                         <input type="password" id="confirmPassword" maxlength="15" class="form-control" placeholder="Confirm your password" required>
                     </div>
 
-                    <button id="submit-form" type="submit" class="btn btn-primary w-100">Update Password</button>
+                    <button id="save-photo" type="submit" class="btn btn-primary w-100">Update Password</button>
 
-                    <button id="loading" class="btn btn-primary w-100 d-none" type="button" disabled>
+                    <button id="loading-photo" class="btn btn-primary w-100 d-none" type="button" disabled>
                         <span class="spinner-grow spinner-grow-sm" aria-hidden="true"></span>
                         <span role="status">Loading...</span>
                     </button>
@@ -91,7 +92,7 @@
         ?>
     </div>
 
-    <script src="src/views/auth/auth.js"></script>
+    <script src="src/views/user/user.js"></script>
 </body>
 
 </html>
