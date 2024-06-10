@@ -41,48 +41,50 @@
 
     <section class="container outer-wrapper">
         <div class="wrapper p-5 shadow-lg">
-            <p class="text-center fw-bold"><?= htmlspecialchars(ucfirst($user_details['privilege'])) ?></p>
-            <div class="d-flex flex-column align-items-center">
-                <input type="file" id="imageInput" name="image" class="d-none" accept="image/*" required>
-                <img id="imagePreview" class="rounded" src="<?= htmlspecialchars($user_details['avatar']) ?>" alt="avatar" style="width: 100px; height: 150px; object-fit: cover;">
-                <div role="button" class="upload-img rounded-pill  bg-secondary py-1 px-3 mt-2 text-light">upload</div>
-            </div>
-            <div class="mt-3">
-                <p><b>Email</b>: <?= htmlspecialchars($user_details['email']) ?></p>
-                <p><b>Username</b>: <?= htmlspecialchars($user_details['username']) ?></p>
-                <p><b>Member since</b>: <?= htmlspecialchars($user_details['created_at']) ?></p>
+            <form action="?page=profile&action=avatar" method="POST">
+                <p class="text-center fw-bold"><?= htmlspecialchars(ucfirst($user_details['privilege'])) ?></p>
+                <div class="d-flex flex-column align-items-center">
+                    <input type="file" id="imageInput" name="image" class="d-none" accept="image/*" required>
+                    <img id="imagePreview" class="rounded" name="avatar" src="<?= htmlspecialchars($user_details['avatar']) ?>" alt="avatar" style="width: 100px; height: 150px; object-fit: cover;">
+                    <div role="button" class="upload-img rounded-pill  bg-secondary py-1 px-3 mt-2 text-light">upload</div>
+                </div>
+                <div class="mt-3">
+                    <p><b>Email</b>: <?= htmlspecialchars($user_details['email']) ?></p>
+                    <p><b>Username</b>: <?= htmlspecialchars($user_details['username']) ?></p>
+                    <p><b>Member since</b>: <?= htmlspecialchars($user_details['created_at']) ?></p>
 
-                <button id="submit-form" type="submit" class="btn btn-primary w-50">Save Photo</button>
+                    <button id="submit-form" type="submit" class="btn btn-primary w-50">Save Photo</button>
 
-                <button id="loading" class="btn btn-primary w-100 d-none" type="button" disabled>
-                    <span class="spinner-grow spinner-grow-sm" aria-hidden="true"></span>
-                    <span role="status">Loading...</span>
-                </button>
-                <hr>
-                <h6 class="text-center"><b>Update Password</b></h6>
-                <form action="">
-                    <div class="mb-3">
-                        <label class="form-label">Old Password <span class="text-danger">*</span></label>
-                        <input type="password" id="password" name="password" maxlength="15" class="form-control" placeholder="Enter your password" required>
-                    </div>
-                    <div class="mb-4">
-                        <label class="form-label">New password <span class="text-danger">*</span></label>
-                        <input type="password" id="newPassword" maxlength="15" class="form-control" placeholder="Confirm your password" required>
-                    </div>
-                    <div class="mb-4">
-                        <label class="form-label">Confirm password <span class="text-danger">*</span></label>
-                        <input type="password" id="confirmPassword" maxlength="15" class="form-control" placeholder="Confirm your password" required>
-                    </div>
-
-                    <button id="save-photo" type="submit" class="btn btn-primary w-100">Update Password</button>
-
-                    <button id="loading-photo" class="btn btn-primary w-100 d-none" type="button" disabled>
+                    <button id="loading" class="btn btn-primary w-100 d-none" disabled>
                         <span class="spinner-grow spinner-grow-sm" aria-hidden="true"></span>
                         <span role="status">Loading...</span>
                     </button>
-                </form>
+            </form>
+            <hr>
+            <h6 class="text-center"><b>Update Password</b></h6>
+            <form action="">
+                <div class="mb-3">
+                    <label class="form-label">Old Password <span class="text-danger">*</span></label>
+                    <input type="password" id="password" name="password" maxlength="15" class="form-control" placeholder="Enter your password" required>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label">New password <span class="text-danger">*</span></label>
+                    <input type="password" id="newPassword" maxlength="15" class="form-control" placeholder="Confirm your password" required>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label">Confirm password <span class="text-danger">*</span></label>
+                    <input type="password" id="confirmPassword" maxlength="15" class="form-control" placeholder="Confirm your password" required>
+                </div>
 
-            </div>
+                <button id="save-photo" type="submit" class="btn btn-primary w-100">Update Password</button>
+
+                <button id="loading-photo" class="btn btn-primary w-100 d-none" type="button" disabled>
+                    <span class="spinner-grow spinner-grow-sm" aria-hidden="true"></span>
+                    <span role="status">Loading...</span>
+                </button>
+            </form>
+
+        </div>
         </div>
     </section>
     <?php include_once(ROOT_PATH . '/src/views/templates/bootstrap_js.php'); ?>

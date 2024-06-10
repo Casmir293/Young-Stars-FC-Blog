@@ -25,8 +25,8 @@ class Auth
         }
 
         $passwordHash = password_hash($password, PASSWORD_BCRYPT);
-        $stmt = $this->pdo->prepare("INSERT INTO users (username, password, email, token, privilege) VALUES (?, ?, ?, ?, 'member')");
-        if ($stmt->execute([$username, $passwordHash, $email, $token])) {
+        $stmt = $this->pdo->prepare("INSERT INTO users (username, password, email, token, privilege) VALUES (?, ?, ?, ?, ?)");
+        if ($stmt->execute([$username, $passwordHash, $email, $token, 'member'])) {
             return ['status' => true, 'message' => 'Registration successful! Verification link sent to your email.'];
         } else {
             return ['status' => false, 'message' => 'Registration failed. Please try again.'];
