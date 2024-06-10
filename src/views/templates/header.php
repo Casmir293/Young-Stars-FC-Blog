@@ -6,6 +6,28 @@ if (!defined('ROOT_PATH')) {
 require_once './src/controllers/user_controller.php';
 $postController = new PostController($pdo);
 $user_details = $userController->view_user_profile();
+
+// Get current page
+function getCurrentPage()
+{
+    return basename($_SERVER['PHP_SELF'], ".php");
+}
+
+function isActive($page, $currentPage, $queryParam = '', $queryValue = '')
+{
+    if ($queryParam && isset($_GET[$queryParam])) {
+        return $_GET[$queryParam] === $queryValue ? 'active' : '';
+    }
+    if (!$queryParam && !isset($_GET['page']) && !isset($_GET['category'])) {
+        return $page === $currentPage ? 'active' : '';
+    }
+    return '';
+}
+
+$current_page = getCurrentPage();
+$category_page = isset($_GET['category']) ? $_GET['category'] : '';
+$page_query = isset($_GET['page']) ? $_GET['page'] : '';
+
 ?>
 
 <nav class="navbar navbar-expand-lg bg-primary fixed-top" data-bs-theme="dark">
@@ -17,29 +39,29 @@ $user_details = $userController->view_user_profile();
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="index.php">Home</a>
+                    <a class="nav-link <?= isActive('index', $current_page) ?>" aria-current="page" href="index.php">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="?page=profile">Profile</a>
+                    <a class="nav-link <?= isActive('profile', $page_query, 'page', 'profile') ?>" href="?page=profile">Profile</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle <?= $category_page ? 'active' : '' ?>" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Category
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="index.php">All</a></li>
-                        <li><a class="dropdown-item" href="?category=updates">Updates</a></li>
-                        <li><a class="dropdown-item" href="?category=tournament">Tournament</a></li>
-                        <li><a class="dropdown-item" href="?category=fun">Fun</a></li>
-                        <li><a class="dropdown-item" href="?category=others">Others</a></li>
+                        <li><a class="dropdown-item <?= $category_page === '' ? 'active' : '' ?>" href="index.php">All</a></li>
+                        <li><a class="dropdown-item <?= $category_page === 'updates' ? 'active' : '' ?>" href="?category=updates">Updates</a></li>
+                        <li><a class="dropdown-item <?= $category_page === 'tournament' ? 'active' : '' ?>" href="?category=tournament">Tournament</a></li>
+                        <li><a class="dropdown-item <?= $category_page === 'fun' ? 'active' : '' ?>" href="?category=fun">Fun</a></li>
+                        <li><a class="dropdown-item <?= $category_page === 'others' ? 'active' : '' ?>" href="?category=others">Others</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle <?= isActive('create_post', $page_query, 'page', 'create_post') ?>" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Staff
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="?page=create_post">Add Post</a></li>
+                        <li><a class="dropdown-item <?= isActive('create_post', $page_query, 'page', 'create_post') ?>" href="?page=create_post">Add Post</a></li>
                         <li><a class="dropdown-item" href="#">Role Management</a></li>
                     </ul>
                 </li>
@@ -50,7 +72,7 @@ $user_details = $userController->view_user_profile();
             <form class="d-flex align-items-center" role="search" action="index.php" method="GET">
                 <input class="form-control me-2" type="search" name="search" placeholder="Search" maxlength="15" aria-label="Search" required>
                 <button class="btn btn-outline-light" type="submit">Search</button>
-                <img src="<?= htmlspecialchars($user_details['avatar']) ?>" alt="profile-img" class="profile-pic">
+                <a href="?page=profile"><img src="<?= htmlspecialchars($user_details['avatar']) ?>" alt="profile-img" class="profile-pic"></a>
                 <a href="?page=logout">
                     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="white" class="logout-svg bi bi-box-arrow-right" viewBox="0 0 16 16">
                         <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z" />
