@@ -18,8 +18,8 @@ class Post
         }
 
         $categories_str = implode(',', $categories);
-        $stmt = $this->pdo->prepare("INSERT INTO posts (user_id, image, title, content, categories) VALUES ('$user_id', '$image_path', '$title', '$content', '$categories_str')");
-        $post = $stmt->execute();
+        $stmt = $this->pdo->prepare("INSERT INTO posts (user_id, image, title, content, categories) VALUES (?, ?, ?, ?, ?)");
+        $post = $stmt->execute([$user_id, $image_path, $title, $content, $categories_str]);
 
         if ($post) {
             return ['status' => true, 'message' => 'Post created successfully.'];
@@ -47,8 +47,8 @@ class Post
     # GET SINGLE POST
     public function get_post_by_id($id)
     {
-        $stmt = $this->pdo->prepare("SELECT * FROM posts WHERE id = '$id'");
-        $stmt->execute();
+        $stmt = $this->pdo->prepare("SELECT * FROM posts WHERE id = ?");
+        $stmt->execute([$id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 

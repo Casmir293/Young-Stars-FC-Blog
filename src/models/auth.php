@@ -41,8 +41,8 @@ class Auth
         $user = $stmt->fetch();
         if ($stmt->rowCount() > 0) {
             if ($user['status'] == '0') {
-                $update_stmt = $this->pdo->prepare("UPDATE users SET status = '1' WHERE token = '$token'");
-                $update_stmt->execute();
+                $update_stmt = $this->pdo->prepare("UPDATE users SET status = '1' WHERE token = ?");
+                $update_stmt->execute([$token]);
                 return ['status' => true, 'message' => 'Email account verified successfully.'];
             } else {
                 return ['status' => true, 'message' => 'Email already verified, login.'];
@@ -64,8 +64,8 @@ class Auth
             $user_email = $user['email'];
             $token = md5(rand());
 
-            $updated_token = $this->pdo->prepare("UPDATE users SET token = '$token' WHERE email = '$user_email'");
-            $updated_token->execute();
+            $updated_token = $this->pdo->prepare("UPDATE users SET token = ? WHERE email = ?");
+            $updated_token->execute([$token, $user_email]);
             return ['status' => true, 'username' => $username, 'email' => $user_email, 'token' => $token];
         } else {
             return ['status' => false, 'message' => 'Email not registered.'];
@@ -75,13 +75,13 @@ class Auth
     # RESET PASSWORD
     public function reset_password($password, $token)
     {
-        $stmt = $this->pdo->prepare("SELECT token FROM users WHERE token='$token'");
-        $stmt->execute();
+        $stmt = $this->pdo->prepare("SELECT token FROM users WHERE token = ?");
+        $stmt->execute([$token]);
 
         if ($stmt->rowCount() > 0) {
             $passwordHash = password_hash($password, PASSWORD_BCRYPT);
-            $update_password = $this->pdo->prepare("UPDATE users SET password = '$passwordHash' WHERE token = '$token'");
-            $update_password->execute();
+            $update_password = $this->pdo->prepare("UPDATE users SET password = ? WHERE token = ?");
+            $update_password->execute([$passwordHash, $token]);
 
             if ($update_password) {
                 $new_token = md5(rand());
