@@ -28,9 +28,20 @@ class UserController
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['id'])) {
             $id = $_SESSION['id'];
-            $avatar = $_POST['avatar'];
-            $result = $this->userModel->update_user_avatar($avatar, $id);
-            return $result;
+
+            // Handle file upload
+            $image = $_FILES['image']['name'];
+            $target = ROOT_PATH . "/assets/images/users/" . basename($image);
+
+            if (move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
+                $image_path = "assets/images/users/" . basename($image);
+                $result = $this->userModel->update_user_avatar($image_path, $id);
+
+                return $result;
+            } else {
+                return ['status' => false, 'message' => 'Failed to upload image.'];
+            }
         }
+        return ['status' => false, 'message' => 'Invalid request.'];
     }
 }

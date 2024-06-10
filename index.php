@@ -180,10 +180,12 @@ switch ($page) {
 
     case 'profile':
         $user_details = $userController->view_user_profile();
-        if ($action === 'avatar') {
+        if (isset($_GET['action']) && $_GET['action'] === 'avatar') {
             $message = $userController->update_avatar();
             $_SESSION['status'] = $message['status'];
             $_SESSION['message'] = $message['message'];
+            header('Location: ?page=profile');
+            exit();
         }
 
         include './src/views/user/index.php';

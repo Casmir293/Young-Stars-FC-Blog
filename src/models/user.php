@@ -19,10 +19,10 @@ class User
     }
 
     # UPDATE USER AVATAR
-    public function update_user_avatar($avatar, $id)
+    public function update_user_avatar($image, $id)
     {
         $stmt = $this->pdo->prepare("UPDATE users SET avatar = ? WHERE id = ?");
-        $stmt->execute([$avatar, $id]);
+        $stmt->execute([$image, $id]);
         if ($stmt) {
             return ['status' => true, 'message' => 'Avatar updated successfully.'];
         } else {

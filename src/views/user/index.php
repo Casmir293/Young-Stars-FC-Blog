@@ -41,12 +41,12 @@
 
     <section class="container outer-wrapper">
         <div class="wrapper p-5 shadow-lg">
-            <form action="?page=profile&action=avatar" method="POST">
+            <form action="?page=profile&action=avatar" method="POST" enctype="multipart/form-data">
                 <p class="text-center fw-bold"><?= htmlspecialchars(ucfirst($user_details['privilege'])) ?></p>
                 <div class="d-flex flex-column align-items-center">
                     <input type="file" id="imageInput" name="image" class="d-none" accept="image/*" required>
-                    <img id="imagePreview" class="rounded" name="avatar" src="<?= htmlspecialchars($user_details['avatar']) ?>" alt="avatar" style="width: 100px; height: 150px; object-fit: cover;">
-                    <div role="button" class="upload-img rounded-pill  bg-secondary py-1 px-3 mt-2 text-light">upload</div>
+                    <img id="imagePreview" class="rounded" src="<?= htmlspecialchars($user_details['avatar']) ?>" alt="avatar" style="width: 100px; height: 150px; object-fit: cover;">
+                    <div role="button" class="upload-img rounded-pill bg-secondary py-1 px-3 mt-2 text-light">upload</div>
                 </div>
                 <div class="mt-3">
                     <p><b>Email</b>: <?= htmlspecialchars($user_details['email']) ?></p>
@@ -59,6 +59,7 @@
                         <span class="spinner-grow spinner-grow-sm" aria-hidden="true"></span>
                         <span role="status">Loading...</span>
                     </button>
+                </div>
             </form>
             <hr>
             <h6 class="text-center"><b>Update Password</b></h6>
