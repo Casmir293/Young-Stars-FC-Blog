@@ -42,7 +42,7 @@
     <section class="container outer-wrapper">
         <div class="wrapper p-5 shadow-lg">
             <form action="?page=profile&action=avatar" method="POST" enctype="multipart/form-data">
-                <p class="text-center fw-bold"><?= htmlspecialchars(ucfirst($user_details['privilege'])) ?></p>
+                <p class="text-center fw-bold fs-4"><?= htmlspecialchars(ucfirst($user_details['privilege'])) ?> Profile</p>
                 <div class="d-flex flex-column align-items-center">
                     <input type="file" id="imageInput" name="image" class="d-none" accept="image/*" required>
                     <img id="imagePreview" class="rounded" src="<?= htmlspecialchars($user_details['avatar']) ?>" alt="avatar" style="width: 100px; height: 150px; object-fit: cover;">
@@ -66,15 +66,15 @@
             <form action="">
                 <div class="mb-3">
                     <label class="form-label">Old Password <span class="text-danger">*</span></label>
-                    <input type="password" id="password" name="password" maxlength="15" class="form-control" placeholder="Enter your password" required>
+                    <input type="password" id="password" name="password" maxlength="15" class="form-control" placeholder="Enter old password" required>
                 </div>
                 <div class="mb-4">
                     <label class="form-label">New password <span class="text-danger">*</span></label>
-                    <input type="password" id="newPassword" maxlength="15" class="form-control" placeholder="Confirm your password" required>
+                    <input type="password" id="newPassword" maxlength="15" class="form-control" placeholder="Enter new password" required>
                 </div>
                 <div class="mb-4">
                     <label class="form-label">Confirm password <span class="text-danger">*</span></label>
-                    <input type="password" id="confirmPassword" maxlength="15" class="form-control" placeholder="Confirm your password" required>
+                    <input type="password" id="confirmPassword" maxlength="15" class="form-control" placeholder="Confirm new password" required>
                 </div>
 
                 <button id="save-photo" type="submit" class="btn btn-primary w-100">Update Password</button>
@@ -83,7 +83,10 @@
                     <span class="spinner-grow spinner-grow-sm" aria-hidden="true"></span>
                     <span role="status">Loading...</span>
                 </button>
+
+                <p class="mt-4"><a href="">Delete account?</a></p>
             </form>
+
 
         </div>
         </div>
