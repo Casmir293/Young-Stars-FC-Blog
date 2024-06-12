@@ -121,16 +121,16 @@ class Auth
     # LOGIN
     public function login($email, $password)
     {
-        $stmt = $this->pdo->prepare("SELECT id, password FROM users WHERE email = ? AND deleted = 0");
+        $stmt = $this->pdo->prepare("SELECT id, password, status FROM users WHERE email = ? AND deleted = 0");
         $stmt->execute([$email]);
         $user = $stmt->fetch();
 
-        if ($user['status'] === "1") {
+        if ($user['status'] == "1") {
             if ($user && password_verify($password, $user['password'])) {
                 return ['status' => true, 'message' => 'Login successful.', 'authenticated' => true, 'id' => $user['id']];
             }
             return ['status' => false, 'message' => 'Incorrect login details.'];
         }
-        return ['status' => false, 'message' => 'You have not vefified your email'];
+        return ['status' => false, 'message' => 'You have not verified your email'];
     }
 }
