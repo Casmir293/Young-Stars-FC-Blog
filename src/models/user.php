@@ -30,6 +30,28 @@ class User
         }
     }
 
+    # CHANGE PASSWORD
+    public function update_password($id, $old_password, $new_password)
+    {
+        $stmt = $this->pdo->prepare("SELECT password FROM users WHERE id = ? AND deleted = 0");
+        $stmt->execute([$id]);
+        $user = $stmt->fetch();
+
+        if ($user) {
+            if (password_verify($old_password, $user['password'])) {
+                $passwordHash = password_hash($new_password, PASSWORD_BCRYPT);
+
+                $stmt = $this->pdo->prepare("UPDATE users SET password = ? WHERE id = ?");
+                $stmt->execute([$passwordHash, $id]);
+                return ['status' => true, 'message' => 'Password updated successfully.'];
+            } else {
+                return ['status' => false, 'message' => 'Incorrect old password'];
+            }
+        } else {
+            return ['status' => false, 'message' => 'Invalid request.'];
+        }
+    }
+
     # DELETE ACCOUNT
     public function delete_user($id, $password)
     {

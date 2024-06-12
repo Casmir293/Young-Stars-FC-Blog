@@ -62,32 +62,32 @@
                 </div>
             </form>
             <hr>
+
             <h6 class="text-center"><b>Update Password</b></h6>
-            <form action="">
+            <form id="passwordForm" method="POST" action="?page=profile&action=change_password" onsubmit="return changePassword(event)">
                 <div class="mb-3">
                     <label class="form-label">Old Password <span class="text-danger">*</span></label>
-                    <input type="password" id="password" name="password" maxlength="15" class="form-control" placeholder="Enter old password" required>
+                    <input type="password" id="password" name="old_password" maxlength="15" class="form-control" placeholder="Enter old password" required>
                 </div>
                 <div class="mb-4">
                     <label class="form-label">New password <span class="text-danger">*</span></label>
-                    <input type="password" id="newPassword" maxlength="15" class="form-control" placeholder="Enter new password" required>
+                    <input type="password" id="newPassword" name="new_password" maxlength="15" class="form-control" placeholder="Enter new password" required>
                 </div>
                 <div class="mb-4">
                     <label class="form-label">Confirm password <span class="text-danger">*</span></label>
                     <input type="password" id="confirmPassword" maxlength="15" class="form-control" placeholder="Confirm new password" required>
                 </div>
 
-                <button id="save-photo" type="submit" class="btn btn-primary w-100">Update Password</button>
+                <button id="save-password" type="submit" class="btn btn-primary w-100">Update Password</button>
 
-                <button id="loading-photo" class="btn btn-primary w-100 d-none" type="button" disabled>
+                <button id="loading-password" class="btn btn-primary w-100 d-none" type="button" disabled>
                     <span class="spinner-grow spinner-grow-sm" aria-hidden="true"></span>
                     <span role="status">Loading...</span>
                 </button>
 
                 <p class="mt-4"><a href="?page=delete_user">Delete account?</a></p>
             </form>
-
-
+            <div id="alertContainer" class="alertContainer"></div>
         </div>
         </div>
     </section>

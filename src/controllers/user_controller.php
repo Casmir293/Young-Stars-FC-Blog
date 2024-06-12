@@ -45,6 +45,19 @@ class UserController
         return ['status' => false, 'message' => 'Invalid request.'];
     }
 
+    # CHANGE PASSWORD
+    public function update_password()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['id'])) {
+            $id = $_SESSION['id'];
+            $old_password = $_POST['old_password'];
+            $new_password = $_POST['new_password'];
+
+            $response = $this->userModel->update_password($id, $old_password, $new_password);
+            return $response;
+        }
+    }
+
     # DELETE ACCOUNT
     public function delete_user()
     {

@@ -180,8 +180,17 @@ switch ($page) {
 
     case 'profile':
         $user_details = $userController->view_user_profile();
+
         if (isset($_GET['action']) && $_GET['action'] === 'avatar') {
             $message = $userController->update_avatar();
+            $_SESSION['status'] = $message['status'];
+            $_SESSION['message'] = $message['message'];
+            header('Location: ?page=profile');
+            exit();
+        }
+
+        if (isset($_GET['action']) && $_GET['action'] === 'change_password') {
+            $message = $userController->update_password();
             $_SESSION['status'] = $message['status'];
             $_SESSION['message'] = $message['message'];
             header('Location: ?page=profile');
