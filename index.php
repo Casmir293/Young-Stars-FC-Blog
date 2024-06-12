@@ -129,8 +129,7 @@ switch ($page) {
         # LOGIN
     case 'login':
         if (isset($_SESSION['authenticated'])) {
-            $_SESSION['authenticated'] = false;
-            $_SESSION['id'] = '';
+            $authController->logout();
         }
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'login') {
             $message = $authController->login();

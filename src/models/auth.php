@@ -125,12 +125,14 @@ class Auth
         $stmt->execute([$email]);
         $user = $stmt->fetch();
 
-        if ($user['status'] == "1") {
-            if ($user && password_verify($password, $user['password'])) {
+        if ($user && password_verify($password, $user['password'])) {
+            if ($user['status'] == "1") {
                 return ['status' => true, 'message' => 'Login successful.', 'authenticated' => true, 'id' => $user['id']];
+            } else {
+                return ['status' => false, 'message' => 'You have not verified your email'];
             }
+        } else {
             return ['status' => false, 'message' => 'Incorrect login details.'];
         }
-        return ['status' => false, 'message' => 'You have not verified your email'];
     }
 }
