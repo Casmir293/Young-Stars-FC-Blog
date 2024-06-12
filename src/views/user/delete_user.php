@@ -28,7 +28,7 @@
                 <h4 class="mb-4 text-center">Are you sure you want to delete your account?</h4>
                 <div class="mb-3">
                     <label class="form-label">Password <span class="text-danger">*</span></label>
-                    <input type="email" name="email" maxlength="50" class="form-control" aria-describedby="emailHelp" placeholder="Enter your password" required>
+                    <input type="password" name="password" class="form-control" maxlength="15" placeholder="Enter your password" required>
                 </div>
                 <div class="form-text mb-3">Go back to <a href="?page=profile">Profile</a></div>
                 <button id="submit-form" type="submit" class="btn btn-outline-danger w-100">Delete Account</button>

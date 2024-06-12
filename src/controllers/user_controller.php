@@ -44,4 +44,23 @@ class UserController
         }
         return ['status' => false, 'message' => 'Invalid request.'];
     }
+
+    # DELETE ACCOUNT
+    public function delete_user()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['id'])) {
+            $id = $_SESSION['id'];
+            $password = $_POST['password'];
+
+            $response = $this->userModel->delete_user($id, $password);
+
+            if ($response['status']) {
+                header('Location: ?page=login');
+                return $response;
+            }
+            header('Location: ?page=delete_user');
+            return $response;
+        }
+        return ['status' => false, 'message' => 'Invalid request.'];
+    }
 }

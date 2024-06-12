@@ -129,7 +129,8 @@ switch ($page) {
         # LOGIN
     case 'login':
         if (isset($_SESSION['authenticated'])) {
-            $authController->logout();
+            $_SESSION['authenticated'] = false;
+            $_SESSION['id'] = '';
         }
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'login') {
             $message = $authController->login();
@@ -191,6 +192,13 @@ switch ($page) {
         break;
 
     case 'delete_user':
+        if ($action === 'delete_user') {
+            $response = $userController->delete_user();
+
+            $_SESSION['status'] = $response['status'];
+            $_SESSION['message'] = $response['message'];
+            exit();
+        }
         include './src/views/user/delete_user.php';
         break;
 

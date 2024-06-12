@@ -29,4 +29,24 @@ class User
             return ['status' => false, 'message' => 'Could not update avatar, something went wrong.'];
         }
     }
+
+    # DELETE ACCOUNT
+    public function delete_user($id, $password)
+    {
+        $stmt = $this->pdo->prepare("SELECT password FROM users WHERE id = ? AND deleted = 0");
+        $stmt->execute([$id]);
+        $user = $stmt->fetch();
+
+        if ($user) {
+            if (password_verify($password, $user['password'])) {
+                $disable_stmt = $this->pdo->prepare("UPDATE users SET deleted = 1 WHERE id = ?");
+                $disable_stmt->execute([$id]);
+                return ['status' => true, 'message' => 'Account deleted successfully.'];
+            } else {
+                return ['status' => false, 'message' => 'Incorrect password'];
+            }
+        } else {
+            return ['status' => false, 'message' => 'Invalid profile, something went wrong.'];
+        }
+    }
 }
