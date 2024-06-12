@@ -84,7 +84,7 @@
                     <span role="status">Loading...</span>
                 </button>
 
-                <p class="mt-4"><a href="">Delete account?</a></p>
+                <p class="mt-4"><a href="?page=delete_user">Delete account?</a></p>
             </form>
 
 

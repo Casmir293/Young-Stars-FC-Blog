@@ -133,11 +133,11 @@ switch ($page) {
         }
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'login') {
             $message = $authController->login();
+            $_SESSION['status'] = $message['status'];
+            $_SESSION['message'] = $message['message'];
 
             if ($message['status']) {
-                $_SESSION['message'] = $message['message'];
                 $_SESSION['authenticated'] = $message['authenticated'];
-                $_SESSION['status'] = $message['status'];
                 $_SESSION['id'] = $message['id'];
                 header('Location: index.php');
             } else {
@@ -187,9 +187,13 @@ switch ($page) {
             header('Location: ?page=profile');
             exit();
         }
-
         include './src/views/user/index.php';
         break;
+
+    case 'delete_user':
+        include './src/views/user/delete_user.php';
+        break;
+
 
         // Add more cases for other actions like posting, editing, etc.
 

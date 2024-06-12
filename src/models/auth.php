@@ -12,13 +12,13 @@ class Auth
     # REGISTER
     public function register($username, $email, $password, $token)
     {
-        $stmt = $this->pdo->prepare("SELECT username FROM users WHERE username = ?");
+        $stmt = $this->pdo->prepare("SELECT username FROM users WHERE username = ? AND deleted = 0");
         $stmt->execute([$username]);
         if ($stmt->rowCount() > 0) {
             return ['status' => false, 'message' => 'Username already exists.'];
         }
 
-        $stmt = $this->pdo->prepare("SELECT email FROM users WHERE email = ?");
+        $stmt = $this->pdo->prepare("SELECT email FROM users WHERE email = ? AND deleted = 0");
         $stmt->execute([$email]);
         if ($stmt->rowCount() > 0) {
             return ['status' => false, 'message' => 'Email already exists.'];
@@ -36,7 +36,7 @@ class Auth
     # VERIFY EMAIL
     public function verify_email($email, $token)
     {
-        $stmt = $this->pdo->prepare("SELECT token, status FROM users WHERE email = ?");
+        $stmt = $this->pdo->prepare("SELECT token, status FROM users WHERE email = ? AND deleted = 0");
         $stmt->execute([$email]);
         $user = $stmt->fetch();
         if ($stmt->rowCount() > 0) {
@@ -55,7 +55,7 @@ class Auth
     # FORGOT PASSWORD
     public function forgot_password($email)
     {
-        $stmt = $this->pdo->prepare("SELECT username, email FROM users WHERE email = ?");
+        $stmt = $this->pdo->prepare("SELECT username, email FROM users WHERE email = ? AND deleted = 0");
         $stmt->execute([$email]);
         $user = $stmt->fetch();
 
@@ -75,7 +75,7 @@ class Auth
     # RESET PASSWORD
     public function reset_password($password, $token)
     {
-        $stmt = $this->pdo->prepare("SELECT token FROM users WHERE token = ?");
+        $stmt = $this->pdo->prepare("SELECT token FROM users WHERE token = ? AND deleted = 0");
         $stmt->execute([$token]);
 
         if ($stmt->rowCount() > 0) {
@@ -99,7 +99,7 @@ class Auth
     # RESEND EMAIL VERIFICATION
     public function resend_verification($email)
     {
-        $stmt = $this->pdo->prepare("SELECT * FROM users WHERE email = ?");
+        $stmt = $this->pdo->prepare("SELECT * FROM users WHERE email = ? AND deleted = 0");
         $stmt->execute([$email]);
         $user = $stmt->fetch();
 
@@ -121,14 +121,16 @@ class Auth
     # LOGIN
     public function login($email, $password)
     {
-        $stmt = $this->pdo->prepare("SELECT id, password FROM users WHERE email = ?");
+        $stmt = $this->pdo->prepare("SELECT id, password FROM users WHERE email = ? AND deleted = 0");
         $stmt->execute([$email]);
         $user = $stmt->fetch();
 
-        if ($user && password_verify($password, $user['password'])) {
-            return ['status' => true, 'message' => 'Login successful.', 'authenticated' => true, 'id' => $user['id']];
-        } else {
+        if ($user['status'] === "1") {
+            if ($user && password_verify($password, $user['password'])) {
+                return ['status' => true, 'message' => 'Login successful.', 'authenticated' => true, 'id' => $user['id']];
+            }
             return ['status' => false, 'message' => 'Incorrect login details.'];
         }
+        return ['status' => false, 'message' => 'You have not vefified your email'];
     }
 }
