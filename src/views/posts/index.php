@@ -2,6 +2,16 @@
 if (!defined('ROOT_PATH')) {
     define('ROOT_PATH', dirname(dirname(dirname(__FILE__))));
 }
+
+// Calculate total pages
+$total_posts = $postController->get_total_posts();
+$limit = 3;
+$total_pages = ceil($total_posts / $limit);
+
+// Get current page from query string, default to 1
+$page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+
+$posts = $postController->view_all_posts($category, $search_query, $page, $limit);
 ?>
 
 <!DOCTYPE html>
@@ -13,7 +23,6 @@ if (!defined('ROOT_PATH')) {
     <title>Young Stars FC</title>
     <?php include_once(ROOT_PATH . '/src/views/templates/bootstrap_css.php'); ?>
     <link rel="stylesheet" href="assets/css/style.css">
-
     <style>
         body,
         html {
@@ -67,7 +76,6 @@ if (!defined('ROOT_PATH')) {
             unset($_SESSION['message']);
             unset($_SESSION['status']);
         } ?>
-        <!--  -->
 
         <section>
             <div class="container">
@@ -89,10 +97,48 @@ if (!defined('ROOT_PATH')) {
                         <p>No posts available.</p>
                     <?php endif; ?>
                 </div>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        <?php
+                        $prev_page = max(1, $page - 1);
+                        $next_page = min($total_pages, $page + 1);
+                        $start_page = max(1, $page - 1);
+                        $end_page = min($total_pages, $page + 1);
+
+                        if ($page == 1) {
+                            $end_page = min($total_pages, 3);
+                        } elseif ($page == $total_pages) {
+                            $start_page = max(1, $total_pages - 2);
+                        }
+
+                        if ($page > 1) {
+                            echo '<li class="page-item">
+                                    <a class="page-link" href="?page=' . $prev_page . '" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                  </li>';
+                        }
+
+                        for ($i = $start_page; $i <= $end_page; $i++) {
+                            $active = $i == $page ? 'active' : '';
+                            echo '<li class="page-item ' . $active . '">
+                                    <a class="page-link" href="?page=' . $i . '">' . $i . '</a>
+                                  </li>';
+                        }
+
+                        if ($page < $total_pages) {
+                            echo '<li class="page-item">
+                                    <a class="page-link" href="?page=' . $next_page . '" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                  </li>';
+                        }
+                        ?>
+                    </ul>
+                </nav>
             </div>
         </section>
     </div>
-
 
     <div class="footer">
         <?php include_once(ROOT_PATH . '/src/views/templates/bootstrap_js.php'); ?>

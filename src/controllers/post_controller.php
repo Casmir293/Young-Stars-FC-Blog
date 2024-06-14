@@ -33,16 +33,34 @@ class PostController
         }
     }
 
-    public function view_all_posts($category = null, $search_query = null)
+    public function view_all_posts($category = null, $search_query = null, $page = 1, $limit = 3)
     {
+        $offset = ($page - 1) * $limit;
+
         if ($search_query) {
             return $this->postModel->search_posts($search_query);
         } else if ($category) {
             return $this->postModel->get_posts_by_category($category);
         } else {
-            return $this->postModel->get_all_posts();
+            return $this->postModel->get_posts_with_pagination($limit, $offset);
         }
     }
+
+    public function get_total_posts()
+    {
+        return $this->postModel->get_total_posts_count();
+    }
+
+    // public function view_all_posts($category = null, $search_query = null)
+    // {
+    //     if ($search_query) {
+    //         return $this->postModel->search_posts($search_query);
+    //     } else if ($category) {
+    //         return $this->postModel->get_posts_by_category($category);
+    //     } else {
+    //         return $this->postModel->get_all_posts();
+    //     }
+    // }
 
 
     public function view()

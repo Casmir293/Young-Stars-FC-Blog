@@ -44,6 +44,24 @@ class Post
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    # GET POSTS WITH PAGINATION
+    public function get_posts_with_pagination($limit, $offset)
+    {
+        $stmt = $this->pdo->prepare("SELECT posts.*, users.username FROM posts JOIN users ON posts.user_id = users.id ORDER BY created_at DESC LIMIT :limit OFFSET :offset");
+        $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+        $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    # GET TOTAL POSTS COUNT
+    public function get_total_posts_count()
+    {
+        $stmt = $this->pdo->prepare("SELECT COUNT(*) as total FROM posts");
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC)['total'];
+    }
+
     # GET SINGLE POST
     public function get_post_by_id($id)
     {
