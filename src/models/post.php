@@ -28,22 +28,28 @@ class Post
         }
     }
 
-    # GET ALL POSTS
-    public function get_all_posts()
+    # GET ALL POSTS WITH PAGINATION
+    public function get_all_posts($page, $limit)
     {
-        $stmt = $this->pdo->prepare("SELECT posts.*, users.username FROM posts JOIN users ON posts.user_id = users.id ORDER BY created_at DESC");
+        $offset = ($page - 1) * $limit;
+        $stmt = $this->pdo->prepare("SELECT posts.*, users.username FROM posts JOIN users ON posts.user_id = users.id ORDER BY created_at DESC LIMIT ? OFFSET ?");
+        $stmt->bindParam(1, $limit, PDO::PARAM_INT);
+        $stmt->bindParam(2, $offset, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    # GET ALL POSTS BY CATEGORY
-    public function get_posts_by_category($category)
+    # GET POSTS BY CATEGORY WITH PAGINATION
+    public function get_posts_by_category($category, $page, $limit)
     {
-        $stmt = $this->pdo->prepare("SELECT posts.*, users.username FROM posts JOIN users ON posts.user_id = users.id WHERE FIND_IN_SET(?, categories) ORDER BY created_at DESC");
-        $stmt->execute([$category]);
+        $offset = ($page - 1) * $limit;
+        $stmt = $this->pdo->prepare("SELECT posts.*, users.username FROM posts JOIN users ON posts.user_id = users.id WHERE FIND_IN_SET(?, categories) ORDER BY created_at DESC LIMIT ? OFFSET ?");
+        $stmt->bindParam(1, $category, PDO::PARAM_STR);
+        $stmt->bindParam(2, $limit, PDO::PARAM_INT);
+        $stmt->bindParam(3, $offset, PDO::PARAM_INT);
+        $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-
     # GET POSTS WITH PAGINATION
     public function get_posts_with_pagination($limit, $offset)
     {
@@ -62,6 +68,30 @@ class Post
         return $stmt->fetch(PDO::FETCH_ASSOC)['total'];
     }
 
+    # GET TOTAL POSTS
+    public function get_total_posts()
+    {
+        $stmt = $this->pdo->query("SELECT COUNT(*) FROM posts");
+        return $stmt->fetchColumn();
+    }
+
+    # GET TOTAL POSTS BY CATEGORY
+    public function get_total_category_posts($category)
+    {
+        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM posts WHERE FIND_IN_SET(?, categories)");
+        $stmt->execute([$category]);
+        return $stmt->fetchColumn();
+    }
+
+    # GET TOTAL SEARCH POSTS
+    public function get_total_search_posts($search_query)
+    {
+        $search_term = '%' . $search_query . '%';
+        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM posts WHERE title LIKE ? OR content LIKE ?");
+        $stmt->execute([$search_term, $search_term]);
+        return $stmt->fetchColumn();
+    }
+
     # GET SINGLE POST
     public function get_post_by_id($id)
     {
@@ -70,12 +100,17 @@ class Post
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    # SEARCH POSTS 
-    public function search_posts($search_query)
+    # SEARCH POSTS WITH PAGINATION
+    public function search_posts($search_query, $page, $limit)
     {
-        $stmt = $this->pdo->prepare("SELECT posts.*, users.username FROM posts JOIN users ON posts.user_id = users.id WHERE posts.title LIKE ? OR posts.content LIKE ? ORDER BY created_at DESC");
+        $offset = ($page - 1) * $limit;
         $search_term = '%' . $search_query . '%';
-        $stmt->execute([$search_term, $search_term]);
+        $stmt = $this->pdo->prepare("SELECT posts.*, users.username FROM posts JOIN users ON posts.user_id = users.id WHERE posts.title LIKE ? OR posts.content LIKE ? ORDER BY created_at DESC LIMIT ? OFFSET ?");
+        $stmt->bindParam(1, $search_term, PDO::PARAM_STR);
+        $stmt->bindParam(2, $search_term, PDO::PARAM_STR);
+        $stmt->bindParam(3, $limit, PDO::PARAM_INT);
+        $stmt->bindParam(4, $offset, PDO::PARAM_INT);
+        $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }

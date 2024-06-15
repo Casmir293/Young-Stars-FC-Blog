@@ -3,15 +3,14 @@ if (!defined('ROOT_PATH')) {
     define('ROOT_PATH', dirname(dirname(dirname(__FILE__))));
 }
 
-// Calculate total pages
-$total_posts = $postController->get_total_posts();
-$limit = 3;
-$total_pages = ceil($total_posts / $limit);
-
-// Get current page from query string, default to 1
+// Determine the total number of posts based on category or search query
+$category = isset($_GET['category']) ? $_GET['category'] : null;
+$search_query = isset($_GET['search']) ? $_GET['search'] : null;
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 
-$posts = $postController->view_all_posts($category, $search_query, $page, $limit);
+$total_posts = $postController->get_total_posts($category, $search_query);
+$limit = 3;
+$total_pages = ceil($total_posts / $limit);
 ?>
 
 <!DOCTYPE html>
@@ -111,9 +110,18 @@ $posts = $postController->view_all_posts($category, $search_query, $page, $limit
                             $start_page = max(1, $total_pages - 2);
                         }
 
+                        // Generate query string parameters for category and search query
+                        $query_string = '';
+                        if ($category) {
+                            $query_string .= '&category=' . urlencode($category);
+                        }
+                        if ($search_query) {
+                            $query_string .= '&search=' . urlencode($search_query);
+                        }
+
                         if ($page > 1) {
                             echo '<li class="page-item">
-                                    <a class="page-link" href="?page=' . $prev_page . '" aria-label="Previous">
+                                    <a class="page-link" href="?page=' . $prev_page . $query_string . '" aria-label="Previous">
                                         <span aria-hidden="true">&laquo;</span>
                                     </a>
                                   </li>';
@@ -122,13 +130,12 @@ $posts = $postController->view_all_posts($category, $search_query, $page, $limit
                         for ($i = $start_page; $i <= $end_page; $i++) {
                             $active = $i == $page ? 'active' : '';
                             echo '<li class="page-item ' . $active . '">
-                                    <a class="page-link" href="?page=' . $i . '">' . $i . '</a>
-                                  </li>';
+                                    <a class="page-link" href="?page=' . $i . $query_string . '">' . $i . '</a>';
                         }
 
                         if ($page < $total_pages) {
                             echo '<li class="page-item">
-                                    <a class="page-link" href="?page=' . $next_page . '" aria-label="Next">
+                                    <a class="page-link" href="?page=' . $next_page . $query_string . '" aria-label="Next">
                                         <span aria-hidden="true">&raquo;</span>
                                     </a>
                                   </li>';
