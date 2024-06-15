@@ -24,7 +24,7 @@ class PostController
             if (move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
                 $image_path = $target;
             } else {
-                $image_path = ""; // Or handle the error
+                $image_path = "";
             }
 
             $result = $this->postModel->create_post($user_id, $image_path, $title, $content, $categories);
@@ -35,33 +35,25 @@ class PostController
 
     public function view_all_posts($category = null, $search_query = null, $page = 1, $limit = 3)
     {
-        $offset = ($page - 1) * $limit;
-
         if ($search_query) {
-            return $this->postModel->search_posts($search_query);
+            return $this->postModel->search_posts($search_query, $page, $limit);
         } else if ($category) {
-            return $this->postModel->get_posts_by_category($category);
+            return $this->postModel->get_posts_by_category($category, $page, $limit);
         } else {
-            return $this->postModel->get_posts_with_pagination($limit, $offset);
+            return $this->postModel->get_all_posts($page, $limit);
         }
     }
 
-    public function get_total_posts()
+    public function get_total_posts($category = null, $search_query = null)
     {
-        return $this->postModel->get_total_posts_count();
+        if ($search_query) {
+            return $this->postModel->get_total_search_posts($search_query);
+        } else if ($category) {
+            return $this->postModel->get_total_category_posts($category);
+        } else {
+            return $this->postModel->get_total_posts();
+        }
     }
-
-    // public function view_all_posts($category = null, $search_query = null)
-    // {
-    //     if ($search_query) {
-    //         return $this->postModel->search_posts($search_query);
-    //     } else if ($category) {
-    //         return $this->postModel->get_posts_by_category($category);
-    //     } else {
-    //         return $this->postModel->get_all_posts();
-    //     }
-    // }
-
 
     public function view()
     {
