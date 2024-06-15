@@ -9,7 +9,7 @@ $search_query = isset($_GET['search']) ? $_GET['search'] : null;
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 
 $total_posts = $postController->get_total_posts($category, $search_query);
-$limit = 3;
+$limit = 12;
 $total_pages = ceil($total_posts / $limit);
 ?>
 
@@ -97,7 +97,7 @@ $total_pages = ceil($total_posts / $limit);
                     <?php endif; ?>
                 </div>
                 <nav aria-label="Page navigation example">
-                    <ul class="pagination justify-content-center">
+                    <ul class="pagination justify-content-center py-4">
                         <?php
                         $prev_page = max(1, $page - 1);
                         $next_page = min($total_pages, $page + 1);
