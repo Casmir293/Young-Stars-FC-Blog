@@ -10,8 +10,7 @@ $authController = new AuthController($pdo);
 $postController = new PostController($pdo);
 $userController = new UserController($pdo);
 
-// $page = isset($_GET['page']) ? $_GET['page'] : 'home';
-$page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+$page = isset($_GET['page']) ? $_GET['page'] : 1;
 $category = isset($_GET['category']) ? $_GET['category'] : null;
 $action = isset($_GET['action']) ? $_GET['action'] : null;
 $search_query = isset($_GET['search']) ? $_GET['search'] : null;

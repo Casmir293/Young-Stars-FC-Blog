@@ -33,7 +33,7 @@ class PostController
         }
     }
 
-    public function view_all_posts($category = null, $search_query = null, $page = 1, $limit = 3)
+    public function view_all_posts($category = null, $search_query = null, $page = 1, $limit = 12)
     {
         if ($search_query) {
             return $this->postModel->search_posts($search_query, $page, $limit);
