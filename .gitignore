@@ -2,4 +2,4 @@
 vendor
 secret.php
 db.php
-config
+config/db.php
