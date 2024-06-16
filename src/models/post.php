@@ -50,23 +50,6 @@ class Post
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    # GET POSTS WITH PAGINATION
-    public function get_posts_with_pagination($limit, $offset)
-    {
-        $stmt = $this->pdo->prepare("SELECT posts.*, users.username FROM posts JOIN users ON posts.user_id = users.id ORDER BY created_at DESC LIMIT :limit OFFSET :offset");
-        $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
-        $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    # GET TOTAL POSTS COUNT
-    public function get_total_posts_count()
-    {
-        $stmt = $this->pdo->prepare("SELECT COUNT(*) as total FROM posts");
-        $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_ASSOC)['total'];
-    }
 
     # GET TOTAL POSTS
     public function get_total_posts()
@@ -111,6 +94,27 @@ class Post
         $stmt->bindParam(3, $limit, PDO::PARAM_INT);
         $stmt->bindParam(4, $offset, PDO::PARAM_INT);
         $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    # ADD COMMENT TO POST
+    public function add_comment($post_id, $user_id, $comment)
+    {
+        $stmt = $this->pdo->prepare("INSERT INTO comments (post_id, user_id, comment) VALUES (?, ?, ?)");
+        $commented = $stmt->execute([$post_id, $user_id, $comment]);
+
+        if ($commented) {
+            return ['status' => true, 'message' => 'comment added successfully'];
+        } else {
+            return ['status' => false, 'message' => 'Failed to add comment.'];
+        }
+    }
+
+    # GET COMMENTS FOR A POST
+    public function get_comments($post_id)
+    {
+        $stmt = $this->pdo->prepare("SELECT comments.*, users.username, users.avatar FROM comments JOIN users ON comments.user_id = users.id WHERE post_id = ? ORDER BY created_at DESC");
+        $stmt->execute([$post_id]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }

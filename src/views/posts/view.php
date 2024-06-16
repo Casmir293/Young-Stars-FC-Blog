@@ -77,50 +77,63 @@ if (!defined('ROOT_PATH')) {
                     <?= nl2br(htmlspecialchars($post['content'])) ?>
                 </p>
                 <hr class="mb-5">
-                <div class="form-floating">
-                    <textarea class="form-control" maxlength="600" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 150px"></textarea>
-                    <label for="floatingTextarea2">Comment here...</label>
-                    <div class="d-flex justify-content-end">
-                        <button type="button" class="btn btn-outline-primary my-3 ">Add Comment</button>
+
+                <form action="?page=view_post&action=view_post" method="POST">
+                    <input type="hidden" name="post_id" value="<?= htmlspecialchars($post['id']) ?>">
+                    <div class="form-floating">
+                        <textarea class="form-control" maxlength="600" placeholder="Leave a comment here" name="comment" id="floatingTextarea2" style="height: 150px" required></textarea>
+                        <label for="floatingTextarea2">Comment here...</label>
+                        <div class="d-flex justify-content-end">
+                            <button type="submit" class="btn btn-outline-primary my-3">Add Comment</button>
+                        </div>
                     </div>
-                </div>
+                </form>
 
                 <!-- All Comments -->
                 <h5>Comments</h5>
 
                 <div class="mt-4">
-                    <div class="mb-4">
-                        <div class="d-flex align-items-center">
-                            <img src="http://localhost/blog/assets/images/posts/4.jpg" alt="avatar" style="height: 40px; width: 40px; object-fit: cover; border-radius: 50%">
-                            <p class="fw-semibold m-0 ps-2">John Doe</p>
-                        </div>
-                        <p class="mb-0">
-                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quisquam itaque, quasi fugiat quae cumque adipisci hic, vero aut non velit, tempora beatae illo laudantium dicta! Amet dolorem possimus architecto totam?
-                        </p>
-                        <div class="d-flex justify-content-end">
-                            <svg role="button" data-bs-toggle="modal" data-bs-target="#exampleModal" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-trash3" viewBox="0 0 16 16">
-                                <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5" />
-                            </svg>
-                        </div>
-                        <!-- modal -->
-                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Delete comment</h1>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <?php foreach ($comments as $comment) : ?>
+                        <div class="mb-4">
+                            <div class="d-flex align-items-center">
+                                <img src="<?= htmlspecialchars($comment['avatar']) ?>" alt="avatar" style="height: 40px; width: 40px; object-fit: cover; border-radius: 50%"> <!-- user avatar -->
+                                <p class="fw-semibold m-0 ps-2"><?= htmlspecialchars($comment['username']) ?> <!-- username --></p>
+                            </div>
+                            <p class="mb-0">
+                                <?= nl2br(htmlspecialchars($comment['comment'])) ?> <!-- user comment -->
+                            </p>
+                            <div class="d-flex justify-content-end">
+                                <!-- Only show delete button if the comment belongs to the logged-in user -->
+                                <?php if ($_SESSION['id'] == $comment['user_id']) : ?>
+                                    <svg role="button" data-bs-toggle="modal" data-bs-target="#exampleModal<?= $comment['id'] ?>" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-trash3" viewBox="0 0 16 16">
+                                        <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5" />
+                                    </svg>
+                                    <!-- modal -->
+                                    <div class="modal fade" id="exampleModal<?= $comment['id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Delete comment</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Are you sure you want to delete this comment?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                    <form action="delete_comment.php" method="POST">
+                                                        <input type="hidden" name="comment_id" value="<?= $comment['id'] ?>">
+                                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="modal-body">
-                                        Are you sure you want to delete this comment?
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                        <button type="button" class="btn btn-danger">Delete</button>
-                                    </div>
-                                </div>
+                                <?php endif; ?>
                             </div>
                         </div>
-                    </div>
+                        <hr>
+                    <?php endforeach; ?>
                 </div>
             </div>
 

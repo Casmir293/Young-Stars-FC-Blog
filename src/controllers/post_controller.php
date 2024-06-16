@@ -55,11 +55,13 @@ class PostController
         }
     }
 
+    # VIEW POST WITH COMMENTS
     public function view()
     {
         if (isset($_GET['id'])) {
             $id = intval($_GET['id']);
             $post = $this->postModel->get_post_by_id($id);
+            $comments = $this->postModel->get_comments($id);
 
             if ($post) {
                 require(ROOT_PATH . '/src/views/posts/view.php');
@@ -72,4 +74,34 @@ class PostController
             return [$_SESSION['status'] = false, $_SESSION['message'] = 'Invalid request.'];
         }
     }
+
+    # ADD A COMMENT
+    public function add_comment()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['id'])) {
+            $post_id = $_POST['post_id'];
+            $user_id = $_SESSION['id'];
+            $comment = trim($_POST['comment']);
+
+            if ($this->postModel->add_comment($post_id, $user_id, $comment)) {
+                $_SESSION['message'] = 'Comment added successfully.';
+                $_SESSION['status'] = true;
+            } else {
+                $_SESSION['message'] = 'Failed to add comment.';
+                $_SESSION['status'] = false;
+            }
+
+            header("Location: ?page=view_post&id=$post_id");
+            exit();
+        }
+    }
+
+    // View post with comments
+    // public function view_post($post_id)
+    // {
+    //     $post = $this->postModel->get_post_by_id($post_id);
+    //     $comments = $this->postModel->get_comments($post_id);
+
+    //     include(ROOT_PATH . '/src/views/posts/view.php');
+    // }
 }
