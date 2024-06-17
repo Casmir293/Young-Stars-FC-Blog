@@ -28,9 +28,21 @@ if (!defined('ROOT_PATH')) {
             width: 1000px;
         }
 
+        .date {
+            font-size: 8px;
+            color: gray;
+        }
+
         @media only screen and (min-width: 600px) {
             .wrap {
                 padding: 48px !important;
+            }
+
+            .comment-container {
+                margin: 0px 150px;
+                border: 1px solid gray;
+                border-radius: 15px;
+                padding: 32px;
             }
         }
     </style>
@@ -78,7 +90,7 @@ if (!defined('ROOT_PATH')) {
                 </p>
                 <hr class="mb-5">
 
-                <form action="?page=view_post&action=view_post" method="POST">
+                <form action="?page=view_post&action=add_comment" method="POST">
                     <input type="hidden" name="post_id" value="<?= htmlspecialchars($post['id']) ?>">
                     <div class="form-floating">
                         <textarea class="form-control" maxlength="600" placeholder="Leave a comment here" name="comment" id="floatingTextarea2" style="height: 150px" required></textarea>
@@ -90,51 +102,58 @@ if (!defined('ROOT_PATH')) {
                 </form>
 
                 <!-- All Comments -->
-                <h5>Comments</h5>
-
-                <div class="mt-4">
-                    <?php foreach ($comments as $comment) : ?>
-                        <div class="mb-4">
-                            <div class="d-flex align-items-center">
-                                <img src="<?= htmlspecialchars($comment['avatar']) ?>" alt="avatar" style="height: 40px; width: 40px; object-fit: cover; border-radius: 50%"> <!-- user avatar -->
-                                <p class="fw-semibold m-0 ps-2"><?= htmlspecialchars($comment['username']) ?> <!-- username --></p>
-                            </div>
-                            <p class="mb-0">
-                                <?= nl2br(htmlspecialchars($comment['comment'])) ?> <!-- user comment -->
-                            </p>
-                            <div class="d-flex justify-content-end">
-                                <!-- Only show delete button if the comment belongs to the logged-in user -->
-                                <?php if ($_SESSION['id'] == $comment['user_id']) : ?>
-                                    <svg role="button" data-bs-toggle="modal" data-bs-target="#exampleModal<?= $comment['id'] ?>" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-trash3" viewBox="0 0 16 16">
-                                        <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5" />
-                                    </svg>
-                                    <!-- modal -->
-                                    <div class="modal fade" id="exampleModal<?= $comment['id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Delete comment</h1>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    Are you sure you want to delete this comment?
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                                    <form action="delete_comment.php" method="POST">
-                                                        <input type="hidden" name="comment_id" value="<?= $comment['id'] ?>">
-                                                        <button type="submit" class="btn btn-danger">Delete</button>
-                                                    </form>
+                <?php if ($comments) : ?>
+                    <div class="comment-container">
+                        <h5>Comments</h5>
+                        <div class="mt-4">
+                            <?php foreach ($comments as $comment) : ?>
+                                <div class="mb-4">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div class="d-flex align-items-center">
+                                            <img src="<?= htmlspecialchars($comment['avatar']) ?>" alt="avatar" style="height: 40px; width: 40px; object-fit: cover; border-radius: 50%">
+                                            <p class="fw-semibold m-0 ps-2"><?= htmlspecialchars(ucfirst($comment['username'])) ?>
+                                        </div>
+                                        <p class="date m-0"> <?= htmlspecialchars($comment['created_at']) ?></p>
+                                    </div>
+                                    <p class="mb-0 text-secondary">
+                                        <?= nl2br(htmlspecialchars($comment['comment'])) ?>
+                                    </p>
+                                    <div class="d-flex justify-content-end">
+                                        <!-- Only show delete button if the comment belongs to the logged-in user -->
+                                        <?php if (isset($_SESSION['id']) && $_SESSION['id'] == $comment['user_id']) : ?>
+                                            <svg role="button" data-bs-toggle="modal" data-bs-target="#exampleModal<?= $comment['id'] ?>" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-trash3" viewBox="0 0 16 16">
+                                                <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5" />
+                                            </svg>
+                                            <!-- modal -->
+                                            <div class="modal fade" id="exampleModal<?= $comment['id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Delete comment</h1>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            Are you sure you want to delete this comment?
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                            <form action="?page=view_post&action=delete_comment" method="POST">
+                                                                <input type="hidden" name="comment_id" value="<?= $comment['id'] ?>">
+                                                                <input type="hidden" name="post_id" value="<?= $post['id'] ?>">
+                                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        <?php endif; ?>
                                     </div>
-                                <?php endif; ?>
-                            </div>
+                                </div>
+                                <hr>
+                            <?php endforeach; ?>
                         </div>
-                        <hr>
-                    <?php endforeach; ?>
-                </div>
+                    </div>
+                <?php endif; ?>
             </div>
 
         </section>

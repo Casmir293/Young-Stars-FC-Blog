@@ -78,11 +78,10 @@ class PostController
     # ADD A COMMENT
     public function add_comment()
     {
+        $post_id = $_POST['post_id'];
+        $user_id = $_SESSION['id'];
+        $comment = trim($_POST['comment']);
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['id'])) {
-            $post_id = $_POST['post_id'];
-            $user_id = $_SESSION['id'];
-            $comment = trim($_POST['comment']);
-
             if ($this->postModel->add_comment($post_id, $user_id, $comment)) {
                 $_SESSION['message'] = 'Comment added successfully.';
                 $_SESSION['status'] = true;
@@ -90,18 +89,34 @@ class PostController
                 $_SESSION['message'] = 'Failed to add comment.';
                 $_SESSION['status'] = false;
             }
-
+            header("Location: ?page=view_post&id=$post_id");
+            exit();
+        } else {
+            $_SESSION['message'] = 'Login to add comment.';
+            $_SESSION['status'] = false;
             header("Location: ?page=view_post&id=$post_id");
             exit();
         }
     }
 
-    // View post with comments
-    // public function view_post($post_id)
-    // {
-    //     $post = $this->postModel->get_post_by_id($post_id);
-    //     $comments = $this->postModel->get_comments($post_id);
+    # DELETE A COMMENT
+    public function delete_comment()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['id'])) {
+            $comment_id = $_POST['comment_id'];
+            $user_id = $_SESSION['id'];
+            $post_id = $_POST['post_id'];
 
-    //     include(ROOT_PATH . '/src/views/posts/view.php');
-    // }
+            if ($this->postModel->delete_comment($comment_id, $user_id)) {
+                $_SESSION['message'] = 'Comment deleted successfully.';
+                $_SESSION['status'] = true;
+            } else {
+                $_SESSION['message'] = 'Failed to delete comment.';
+                $_SESSION['status'] = false;
+            }
+
+            header("Location: ?page=view_post&id=$post_id");
+            exit();
+        }
+    }
 }

@@ -113,8 +113,15 @@ class Post
     # GET COMMENTS FOR A POST
     public function get_comments($post_id)
     {
-        $stmt = $this->pdo->prepare("SELECT comments.*, users.username, users.avatar FROM comments JOIN users ON comments.user_id = users.id WHERE post_id = ? ORDER BY created_at DESC");
+        $stmt = $this->pdo->prepare("SELECT comments.*, users.username, users.avatar FROM comments JOIN users ON comments.user_id = users.id WHERE comments.deleted = 0 AND post_id = ? ORDER BY created_at DESC");
         $stmt->execute([$post_id]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    # DELETE COMMENT
+    public function delete_comment($comment_id, $user_id)
+    {
+        $stmt = $this->pdo->prepare("UPDATE comments SET deleted = 1 WHERE id = ? AND user_id = ?");
+        return $stmt->execute([$comment_id, $user_id]);
     }
 }
