@@ -32,7 +32,7 @@ class Post
     public function get_all_posts($page, $limit)
     {
         $offset = ($page - 1) * $limit;
-        $stmt = $this->pdo->prepare("SELECT posts.*, users.username FROM posts JOIN users ON posts.user_id = users.id ORDER BY created_at DESC LIMIT ? OFFSET ?");
+        $stmt = $this->pdo->prepare("SELECT posts.*, users.username FROM posts JOIN users ON posts.user_id = users.id WHERE posts.deleted = 0 ORDER BY created_at DESC LIMIT ? OFFSET ?");
         $stmt->bindParam(1, $limit, PDO::PARAM_INT);
         $stmt->bindParam(2, $offset, PDO::PARAM_INT);
         $stmt->execute();
@@ -43,7 +43,7 @@ class Post
     public function get_posts_by_category($category, $page, $limit)
     {
         $offset = ($page - 1) * $limit;
-        $stmt = $this->pdo->prepare("SELECT posts.*, users.username FROM posts JOIN users ON posts.user_id = users.id WHERE FIND_IN_SET(?, categories) ORDER BY created_at DESC LIMIT ? OFFSET ?");
+        $stmt = $this->pdo->prepare("SELECT posts.*, users.username FROM posts JOIN users ON posts.user_id = users.id WHERE posts.deleted = 0 AND FIND_IN_SET(?, categories) ORDER BY created_at DESC LIMIT ? OFFSET ?");
         $stmt->bindParam(1, $category, PDO::PARAM_STR);
         $stmt->bindParam(2, $limit, PDO::PARAM_INT);
         $stmt->bindParam(3, $offset, PDO::PARAM_INT);
@@ -54,14 +54,14 @@ class Post
     # GET TOTAL POSTS
     public function get_total_posts()
     {
-        $stmt = $this->pdo->query("SELECT COUNT(*) FROM posts");
+        $stmt = $this->pdo->query("SELECT COUNT(*) FROM posts WHERE posts.deleted = 0");
         return $stmt->fetchColumn();
     }
 
     # GET TOTAL POSTS BY CATEGORY
     public function get_total_category_posts($category)
     {
-        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM posts WHERE FIND_IN_SET(?, categories)");
+        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM posts WHERE posts.deleted = 0 AND FIND_IN_SET(?, categories)");
         $stmt->execute([$category]);
         return $stmt->fetchColumn();
     }
@@ -70,7 +70,7 @@ class Post
     public function get_total_search_posts($search_query)
     {
         $search_term = '%' . $search_query . '%';
-        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM posts WHERE title LIKE ? OR content LIKE ?");
+        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM posts WHERE posts.deleted = 0 AND title LIKE ? OR content LIKE ?");
         $stmt->execute([$search_term, $search_term]);
         return $stmt->fetchColumn();
     }
@@ -78,7 +78,7 @@ class Post
     # GET SINGLE POST
     public function get_post_by_id($id)
     {
-        $stmt = $this->pdo->prepare("SELECT * FROM posts WHERE id = ?");
+        $stmt = $this->pdo->prepare("SELECT * FROM posts WHERE posts.deleted = 0 AND id = ?");
         $stmt->execute([$id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
@@ -88,13 +88,20 @@ class Post
     {
         $offset = ($page - 1) * $limit;
         $search_term = '%' . $search_query . '%';
-        $stmt = $this->pdo->prepare("SELECT posts.*, users.username FROM posts JOIN users ON posts.user_id = users.id WHERE posts.title LIKE ? OR posts.content LIKE ? ORDER BY created_at DESC LIMIT ? OFFSET ?");
+        $stmt = $this->pdo->prepare("SELECT posts.*, users.username FROM posts JOIN users ON posts.user_id = users.id WHERE posts.deleted = 0 AND posts.title LIKE ? OR posts.content LIKE ? ORDER BY created_at DESC LIMIT ? OFFSET ?");
         $stmt->bindParam(1, $search_term, PDO::PARAM_STR);
         $stmt->bindParam(2, $search_term, PDO::PARAM_STR);
         $stmt->bindParam(3, $limit, PDO::PARAM_INT);
         $stmt->bindParam(4, $offset, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    # DELETE POST
+    public function delete_post($post_id)
+    {
+        $stmt = $this->pdo->prepare("UPDATE posts SET deleted = 1 WHERE deleted = 0 AND id = ?");
+        return $stmt->execute([$post_id]);
     }
 
     # ADD COMMENT TO POST

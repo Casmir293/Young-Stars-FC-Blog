@@ -185,6 +185,11 @@ switch ($page) {
             $comment = $postController->delete_comment();
             exit();
         }
+
+        if ($action === 'delete_post') {
+            $comment = $postController->delete_post();
+            exit();
+        }
         break;
 
     case 'profile':

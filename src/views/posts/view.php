@@ -88,6 +88,11 @@ if (!defined('ROOT_PATH')) {
                 <p>
                     <?= nl2br(htmlspecialchars($post['content'])) ?>
                 </p>
+
+                <form method="POST" action="?page=view_post&action=delete_post">
+                    <input type="hidden" name="post_id" value="<?= htmlspecialchars($post['id']) ?>">
+                    <button type="submit" class="btn btn-outline-danger my-3">Delete Post</button>
+                </form>
                 <hr class="mb-5">
 
                 <form action="?page=view_post&action=add_comment" method="POST">
