@@ -89,10 +89,31 @@ if (!defined('ROOT_PATH')) {
                     <?= nl2br(htmlspecialchars($post['content'])) ?>
                 </p>
 
-                <form method="POST" action="?page=view_post&action=delete_post">
-                    <input type="hidden" name="post_id" value="<?= htmlspecialchars($post['id']) ?>">
-                    <button type="submit" class="btn btn-outline-danger my-3">Delete Post</button>
-                </form>
+                <div>
+                    <!-- <input type="hidden" name="post_id" value="<?= htmlspecialchars($post['id']) ?>"> -->
+                    <button type="submit" class="btn btn-outline-danger my-3" data-bs-toggle="modal" data-bs-target="#exampleModal<?= $post['id'] ?>">Delete Post</button>
+                </div>
+                <!-- modal -->
+                <div class="modal fade" id="exampleModal<?= $post['id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Delete post</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                Are you sure you want to delete this post?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <form method="POST" action="?page=view_post&action=delete_post">
+                                    <input type="hidden" name="post_id" value="<?= $post['id'] ?>">
+                                    <button type="submit" class="btn btn-outline-danger my-3">Delete Post</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <hr class="mb-5">
 
                 <form action="?page=view_post&action=add_comment" method="POST">
