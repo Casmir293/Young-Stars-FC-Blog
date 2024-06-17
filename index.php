@@ -176,6 +176,20 @@ switch ($page) {
 
     case 'view_post':
         $post = $postController->view();
+        if ($action === 'add_comment') {
+            $comment = $postController->add_comment();
+            exit();
+        }
+
+        if ($action === 'delete_comment') {
+            $comment = $postController->delete_comment();
+            exit();
+        }
+
+        if ($action === 'delete_post') {
+            $comment = $postController->delete_post();
+            exit();
+        }
         break;
 
     case 'profile':
