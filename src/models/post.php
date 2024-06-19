@@ -9,6 +9,7 @@ class Post
     {
         $this->pdo = $pdo;
     }
+    // POSTS
 
     # CREATE POST
     public function create_post($user_id, $image_path, $title, $content, $categories)
@@ -104,6 +105,8 @@ class Post
         return $stmt->execute([$post_id]);
     }
 
+    // COMMENTS
+
     # ADD COMMENT TO POST
     public function add_comment($post_id, $user_id, $comment)
     {
@@ -130,5 +133,38 @@ class Post
     {
         $stmt = $this->pdo->prepare("UPDATE comments SET deleted = 1 WHERE id = ? AND user_id = ?");
         return $stmt->execute([$comment_id, $user_id]);
+    }
+
+    // LIKES
+
+    # LIKE POST
+    public function like_post($post_id, $user_id)
+    {
+        $stmt = $this->pdo->prepare("INSERT INTO likes (post_id, user_id) VALUES (?, ?)");
+        return $stmt->execute([$post_id, $user_id]);
+    }
+
+    # UNLIKE POST
+    public function unlike_post($post_id, $user_id)
+    {
+        $stmt = $this->pdo->prepare("DELETE FROM likes WHERE post_id = ? AND user_id = ?");
+        return $stmt->execute([$post_id, $user_id]);
+    }
+
+    # IF POST IS LIKED
+    public function is_post_liked($post_id, $user_id)
+    {
+        $stmt = $this->pdo->prepare("SELECT * FROM likes WHERE post_id = ? AND user_id = ?");
+        $stmt->execute([$post_id, $user_id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    # POST LIKE COUNT
+    public function get_like_count($post_id)
+    {
+        $stmt = $this->pdo->prepare("SELECT COUNT(*) as like_count FROM likes WHERE post_id = ?");
+        $stmt->execute([$post_id]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['like_count'];
     }
 }

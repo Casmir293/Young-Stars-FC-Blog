@@ -3,7 +3,7 @@ require_once './src/models/post.php';
 
 class PostController
 {
-    private $postModel;
+    public $postModel;
 
     public function __construct($pdo)
     {
@@ -134,6 +134,23 @@ class PostController
                 $_SESSION['status'] = false;
             }
 
+            header("Location: ?page=view_post&id=$post_id");
+            exit();
+        }
+    }
+
+    # LIKE AND UNLIKE POST
+    public function like_post()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['id'])) {
+            $post_id = $_POST['post_id'];
+            $user_id = $_SESSION['id'];
+
+            if ($this->postModel->is_post_liked($post_id, $user_id)) {
+                $this->postModel->unlike_post($post_id, $user_id);
+            } else {
+                $this->postModel->like_post($post_id, $user_id);
+            }
             header("Location: ?page=view_post&id=$post_id");
             exit();
         }

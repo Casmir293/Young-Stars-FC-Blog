@@ -175,7 +175,17 @@ switch ($page) {
         break;
 
     case 'view_post':
-        $post = $postController->view();
+
+        if ($action !== 'react_post') {
+            $post = $postController->view();
+            exit();
+        }
+
+        if ($action === 'react_post') {
+            $react = $postController->like_post();
+            exit();
+        }
+
         if ($action === 'add_comment') {
             $comment = $postController->add_comment();
             exit();

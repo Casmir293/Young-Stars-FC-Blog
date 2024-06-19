@@ -2,6 +2,9 @@
 if (!defined('ROOT_PATH')) {
     define('ROOT_PATH', dirname(dirname(dirname(__FILE__))));
 }
+require_once 'db.php';
+require_once './src/controllers/post_controller.php';
+$postController = new PostController($pdo);
 ?>
 
 <!DOCTYPE html>
@@ -73,14 +76,28 @@ if (!defined('ROOT_PATH')) {
                 <div class="d-flex justify-content-center ">
                     <img src="<?= htmlspecialchars($post['image']) ?>" alt="" class="rounded-3" style="width: 100%; height: 400px; object-fit: cover;">
                 </div>
-                <div>
-                    <svg role="button" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
-                        <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
-                    </svg>
-                    <svg role="button" xmlns=" http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-heart-fill" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314" />
-                    </svg>
-                    <span>2</span>
+                <div id="like-section" class="d-flex align-items-center gap-2">
+                    <div>
+                        <form action="?page=view_post&action=react_post" method="POST">
+                            <input type="hidden" name="post_id" value="<?= htmlspecialchars($post['id']) ?>">
+                            <?php if ($postController->postModel->is_post_liked($post['id'], $_SESSION['id'])) : ?>
+                                <button type="submit" class="btn btn-link p-0">
+                                    <svg id="unlike-btn" role="button" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314" />
+                                    </svg>
+                                </button>
+                            <?php else : ?>
+                                <button type="submit" class="btn btn-link p-0">
+                                    <svg id="like-btn" role="button" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                                        <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
+                                    </svg>
+                                </button>
+                            <?php endif; ?>
+
+
+                        </form>
+                    </div>
+                    <p id="like-count" class="fw-bold m-0"><?= htmlspecialchars($postController->postModel->get_like_count($post['id'])) ?></p>
                 </div>
 
                 <h5 class="my-4"><?= htmlspecialchars($post['title']) ?></h5>
@@ -90,7 +107,6 @@ if (!defined('ROOT_PATH')) {
                 </p>
 
                 <div>
-                    <!-- <input type="hidden" name="post_id" value="<?= htmlspecialchars($post['id']) ?>"> -->
                     <button type="submit" class="btn btn-outline-danger my-3" data-bs-toggle="modal" data-bs-target="#exampleModal<?= $post['id'] ?>">Delete Post</button>
                 </div>
                 <!-- modal -->
