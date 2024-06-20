@@ -53,9 +53,9 @@
                     <p><b>Username</b>: <?= htmlspecialchars($user_details['username']) ?></p>
                     <p><b>Member since</b>: <?= htmlspecialchars($user_details['created_at']) ?></p>
 
-                    <button id="submit-form" type="submit" class="btn btn-primary w-50">Save Photo</button>
+                    <button id="submit-form" type="submit" class="btn btn-warning w-50">Save Photo</button>
 
-                    <button id="loading" class="btn btn-primary w-100 d-none" disabled>
+                    <button id="loading" class="btn btn-warning w-100 d-none" disabled>
                         <span class="spinner-grow spinner-grow-sm" aria-hidden="true"></span>
                         <span role="status">Loading...</span>
                     </button>
@@ -78,9 +78,9 @@
                     <input type="password" id="confirmPassword" maxlength="15" class="form-control" placeholder="Confirm new password" required>
                 </div>
 
-                <button id="save-password" type="submit" class="btn btn-primary w-100">Update Password</button>
+                <button id="save-password" type="submit" class="btn btn-warning w-100">Update Password</button>
 
-                <button id="loading-password" class="btn btn-primary w-100 d-none" type="button" disabled>
+                <button id="loading-password" class="btn btn-warning w-100 d-none" type="button" disabled>
                     <span class="spinner-grow spinner-grow-sm" aria-hidden="true"></span>
                     <span role="status">Loading...</span>
                 </button>

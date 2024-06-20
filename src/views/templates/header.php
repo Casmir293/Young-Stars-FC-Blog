@@ -51,6 +51,21 @@ $page_query = isset($_GET['page']) ? $_GET['page'] : '';
             display: none;
         }
 
+        .navbar-nav .nav-link.active,
+        .navbar-nav .nav-link.show {
+            color: black !important;
+            font-weight: bold !important;
+        }
+
+        .nav-link {
+            color: gray !important;
+        }
+
+        .dropdown-item.active,
+        .dropdown-item:active {
+            background-color: rgba(var(--bs-warning-rgb), var(--bs-bg-opacity)) !important;
+        }
+
         @media (min-width: 1024px) {
             .profile-pic {
                 margin-left: 20px;
@@ -74,9 +89,9 @@ $page_query = isset($_GET['page']) ? $_GET['page'] : '';
 
 
 
-    <nav class="navbar navbar-expand-lg bg-primary fixed-top" data-bs-theme="dark">
+    <nav class="navbar navbar-expand-lg bg-warning fixed-top" data-bs-theme="dark">
         <div class="container">
-            <a class="navbar-brand" href="index.php"> Y<span class="text-warning">OUN</span>G✨<span class="text-warning">S</span>TAR<span class="text-warning">S✨F</span>C</a>
+            <a class="navbar-brand" href="index.php"> Y<span class="text-primary">OUN</span>G✨<span class="text-primary">S</span>TAR<span class="text-primary">S✨F</span>C</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>

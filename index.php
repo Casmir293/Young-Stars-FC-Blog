@@ -234,6 +234,11 @@ switch ($page) {
         include './src/views/user/delete_user.php';
         break;
 
+        # LIST ALL USERS
+    case 'all_users':
+
+        include './src/views/user/all_users.php';
+        break;
 
         // Add more cases for other actions like posting, editing, etc.
 

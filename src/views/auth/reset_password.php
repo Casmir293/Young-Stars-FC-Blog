@@ -49,9 +49,9 @@
                 </div>
                 <div class="form-text mb-3">Go back to <a href="?page=login">Login</a></div>
 
-                <button id="submit-form" type="submit" class="btn btn-primary w-100">Update Password</button>
+                <button id="submit-form" type="submit" class="btn btn-warning w-100">Update Password</button>
 
-                <button id="loading" class="btn btn-primary w-100 d-none" type="button" disabled>
+                <button id="loading" class="btn btn-warning w-100 d-none" type="button" disabled>
                     <span class="spinner-grow spinner-grow-sm" aria-hidden="true"></span>
                     <span role="status">Loading...</span>
                 </button>

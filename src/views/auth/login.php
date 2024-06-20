@@ -38,9 +38,9 @@
                 <div id="emailHelp" class="form-text mb-1">Don't have an account? <a href="?page=register">Register</a></div>
                 <div id="emailHelp" class="form-text mb-3">Resend <a href="?page=resend_verification">Email Verification</a></div>
 
-                <button id="submit-form" type="submit" class="btn btn-primary w-100">Login</button>
+                <button id="submit-form" type="submit" class="btn btn-warning w-100">Login</button>
 
-                <button id="loading" class="btn btn-primary w-100 d-none" type="button" disabled>
+                <button id="loading" class="btn btn-warning w-100 d-none" type="button" disabled>
                     <span class="spinner-grow spinner-grow-sm" aria-hidden="true"></span>
                     <span role="status">Loading...</span>
                 </button>

@@ -55,6 +55,16 @@ $total_pages = ceil($total_posts / $limit);
             -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
         }
+
+        .page-link {
+            color: black;
+        }
+
+        .active>.page-link,
+        .page-link.active {
+            background-color: rgba(var(--bs-warning-rgb));
+            border-color: yellow;
+        }
     </style>
 </head>
 
@@ -87,7 +97,7 @@ $total_pages = ceil($total_posts / $limit);
                                     <div class="card-body">
                                         <h5 class="card-title"><?= htmlspecialchars($post['title']) ?></h5>
                                         <p class="card-text"><?= htmlspecialchars($post['content']) ?></p>
-                                        <a href="?page=view_post&id=<?= htmlspecialchars($post['id']) ?>" class="btn btn-primary">Read more</a>
+                                        <a href="?page=view_post&id=<?= htmlspecialchars($post['id']) ?>" class="btn btn-warning">Read more</a>
                                     </div>
                                 </div>
                             </div>
