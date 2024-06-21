@@ -87,8 +87,6 @@ $page_query = isset($_GET['page']) ? $_GET['page'] : '';
 
 <body>
 
-
-
     <nav class="navbar navbar-expand-lg bg-warning fixed-top" data-bs-theme="dark">
         <div class="container">
             <a class="navbar-brand" href="index.php"> Y<span class="text-primary">OUN</span>G✨<span class="text-primary">S</span>TAR<span class="text-primary">S✨F</span>C</a>
@@ -121,7 +119,7 @@ $page_query = isset($_GET['page']) ? $_GET['page'] : '';
                         </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item <?= isActive('create_post', $page_query, 'page', 'create_post') ?>" href="?page=create_post">Add Post</a></li>
-                            <li><a class="dropdown-item" href="#">Role Management</a></li>
+                            <li><a class="dropdown-item <?= isActive('all_users', $page_query, 'page', 'all_users') ?>" href="?page=all_users">Role Management</a></li>
                         </ul>
                     </li>
                     <li class="nav-item logout">
