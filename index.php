@@ -175,11 +175,7 @@ switch ($page) {
         break;
 
     case 'view_post':
-
-        if ($action !== 'react_post') {
-            $post = $postController->view();
-            exit();
-        }
+        $post = $postController->view();
 
         if ($action === 'react_post') {
             $react = $postController->like_post();

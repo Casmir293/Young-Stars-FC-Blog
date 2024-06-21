@@ -88,9 +88,6 @@ class PostController
                 header('Location: index.php');
                 return [$_SESSION['status'] = false, $_SESSION['message'] = 'Post not found.'];
             }
-        } else {
-            header('Location: index.php');
-            return [$_SESSION['status'] = false, $_SESSION['message'] = 'Invalid request.'];
         }
     }
 
