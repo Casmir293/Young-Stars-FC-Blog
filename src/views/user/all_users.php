@@ -48,45 +48,46 @@ if (!defined('ROOT_PATH')) {
                     <button type="submit" class="btn btn-outline-success my-3">Update Privilege</button>
                 </div>
 
-                <div>
-                    <ol>
-                        <li class="mb-3">
-                            <b>Casmir</b>
-                            <div class="d-flex gap-3">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="privilege" id="member">
-                                    <label class="form-check-label" for="member">
-                                        member
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="privilege" id="editor">
-                                    <label class="form-check-label" for="editor">
-                                        editor
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="privilege" id="admin">
-                                    <label class="form-check-label" for="admin">
-                                        admin
-                                    </label>
-                                </div>
-                            </div>
-                        </li>
-                    </ol>
-                    <div class="d-flex justify-content-end">
-                        <button type="submit" class="btn btn-outline-success my-3">Update Privilege</button>
-
+                <form action="update_privilege.php" method="POST">
+                    <div>
+                        <ol>
+                            <?php foreach ($users as $user) : ?>
+                                <li class="mb-3">
+                                    <b><?= htmlspecialchars($user['username']) ?></b>
+                                    <div class="d-flex gap-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="privilege[<?= $user['id'] ?>]" value="member" id="member_<?= $user['id'] ?>" <?= $user['privilege'] == 'member' ? 'checked' : '' ?>>
+                                            <label class="form-check-label" for="member_<?= $user['id'] ?>">
+                                                member
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="privilege[<?= $user['id'] ?>]" value="editor" id="editor_<?= $user['id'] ?>" <?= $user['privilege'] == 'editor' ? 'checked' : '' ?>>
+                                            <label class="form-check-label" for="editor_<?= $user['id'] ?>">
+                                                editor
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="privilege[<?= $user['id'] ?>]" value="admin" id="admin_<?= $user['id'] ?>" <?= $user['privilege'] == 'admin' ? 'checked' : '' ?>>
+                                            <label class="form-check-label" for="admin_<?= $user['id'] ?>">
+                                                admin
+                                            </label>
+                                        </div>
+                                    </div>
+                                </li>
+                            <?php endforeach; ?>
+                        </ol>
+                        <div class="d-flex justify-content-end">
+                            <button type="submit" class="btn btn-outline-success my-3">Update Privilege</button>
+                        </div>
                     </div>
-                </div>
+                </form>
 
             </section>
         </section>
     </section>
     <?php include_once(ROOT_PATH . '/src/views/templates/bootstrap_js.php'); ?>
-    <?php
-    include_once(ROOT_PATH . '/src/views/templates/footer.php');
-    ?>
+    <?php include_once(ROOT_PATH . '/src/views/templates/footer.php'); ?>
     <script src="src/views/posts/posts.js"></script>
 </body>
 

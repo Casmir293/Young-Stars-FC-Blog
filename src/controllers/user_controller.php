@@ -76,4 +76,10 @@ class UserController
         }
         return ['status' => false, 'message' => 'Invalid request.'];
     }
+
+    # GET ALL USERS
+    public function get_all_users()
+    {
+        return $this->userModel->get_all_users();
+    }
 }

@@ -71,4 +71,14 @@ class User
             return ['status' => false, 'message' => 'Invalid profile, something went wrong.'];
         }
     }
+
+    # LIST ALL USERS
+    public function get_all_users()
+    {
+        $stmt = $this->pdo->query("SELECT id, username, privilege FROM users");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    # UPDATE PRIVILEGE
+
 }

@@ -232,7 +232,7 @@ switch ($page) {
 
         # LIST ALL USERS
     case 'all_users':
-
+        $users = $userController->get_all_users();
         include './src/views/user/all_users.php';
         break;
 
