@@ -75,10 +75,14 @@ class User
     # LIST ALL USERS
     public function get_all_users()
     {
-        $stmt = $this->pdo->query("SELECT id, username, privilege FROM users");
+        $stmt = $this->pdo->query("SELECT id, username, privilege FROM users WHERE deleted = 0");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     # UPDATE PRIVILEGE
-
+    public function update_privilege($privilege, $id)
+    {
+        $stmt = $this->pdo->prepare("UPDATE users SET privilege = ? WHERE id = ? AND deleted = 0");
+        $stmt->execute([$privilege, $id]);
+    }
 }

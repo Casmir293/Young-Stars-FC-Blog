@@ -174,6 +174,7 @@ switch ($page) {
         include './src/views/posts/create.php';
         break;
 
+        # VIEW SINGLE POST
     case 'view_post':
         $post = $postController->view();
 
@@ -198,6 +199,7 @@ switch ($page) {
         }
         break;
 
+        # VIEW USER PROFILE
     case 'profile':
         $user_details = $userController->view_user_profile();
 
@@ -219,6 +221,7 @@ switch ($page) {
         include './src/views/user/index.php';
         break;
 
+        # DELETE USERS
     case 'delete_user':
         if ($action === 'delete_user') {
             $response = $userController->delete_user();
@@ -233,10 +236,16 @@ switch ($page) {
         # LIST ALL USERS
     case 'all_users':
         $users = $userController->get_all_users();
+
+        if ($action === 'update_privilege') {
+            $response = $userController->update_privilege();
+            $_SESSION['status'] = $response['status'];
+            $_SESSION['message'] = $response['message'];
+            header('Location: index.php');
+            exit();
+        }
         include './src/views/user/all_users.php';
         break;
-
-        // Add more cases for other actions like posting, editing, etc.
 
     default:
         $posts = $postController->view_all_posts($category, $search_query, $page);

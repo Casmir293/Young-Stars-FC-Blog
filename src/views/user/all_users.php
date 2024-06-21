@@ -48,7 +48,7 @@ if (!defined('ROOT_PATH')) {
                     <button type="submit" class="btn btn-outline-success my-3">Update Privilege</button>
                 </div>
 
-                <form action="update_privilege.php" method="POST">
+                <form action="?page=all_users&action=update_privilege" method="POST">
                     <div>
                         <ol>
                             <?php foreach ($users as $user) : ?>

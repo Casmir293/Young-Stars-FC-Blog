@@ -82,4 +82,19 @@ class UserController
     {
         return $this->userModel->get_all_users();
     }
+
+    # UPDATE PRIVILEGE
+    public function update_privilege()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['id'])) {
+            $privileges = $_POST['privilege'];
+
+            foreach ($privileges as $id => $privilege) {
+                $this->userModel->update_privilege($privilege, $id);
+            }
+            return ['status' => true, 'message' => 'Privileges updated successfully.'];
+        } else {
+            return ['status' => false, 'message' => 'Unauthorized access.'];
+        }
+    }
 }
