@@ -43,12 +43,11 @@ if (!defined('ROOT_PATH')) {
     <section class="container outer-wrapper">
         <section class="wrapper p-5 shadow-lg">
             <section>
-                <div class="d-flex justify-content-between align-items-center">
-                    <h3>All Users</h3>
-                    <button type="submit" class="btn btn-outline-success my-3">Update Privilege</button>
-                </div>
-
                 <form action="?page=all_users&action=update_privilege" method="POST">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h3>All Users</h3>
+                        <button type="submit" class="btn btn-outline-success my-3">Update Privilege</button>
+                    </div>
                     <div>
                         <ol>
                             <?php foreach ($users as $user) : ?>
