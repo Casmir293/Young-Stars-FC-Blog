@@ -25,16 +25,18 @@ jobs:
         echo "DB_USER=${{ secrets.DB_USER }}" >> .env
         echo "DB_PASS=${{ secrets.DB_PASS }}" >> .env
 
-    # - name: Deploy
-    #   run: |
-    #     # Your deployment commands here
+    - name: Install lftp
+      run: sudo apt-get install -y lftp
 
-    # - name: Upload to Namecheap via FTP
-    #   uses: SamKirkland/FTP-Deploy-Action@4.1.0
-    #   with:
-    #     server: ${{ secrets.FTP_SERVER }}
-    #     username: ${{ secrets.FTP_USERNAME }}
-    #     password: ${{ secrets.FTP_PASSWORD }}
-    #     port: ${{ secrets.FTP_PORT }}
-    #     local-dir: ./  # Local directory to upload, adjust as needed
-    #     server-dir: /youngstars.casmir.dev/
+    - name: Deploy
+      env:
+        FTP_HOST: ${{ secrets.FTP_HOST }}
+        FTP_USER: ${{ secrets.FTP_USER }}
+        FTP_PASS: ${{ secrets.FTP_PASS }}
+        FTP_PATH: ${{ secrets.FTP_PATH }}
+      run: |
+        lftp -c "
+        open -u $FTP_USER,$FTP_PASS $FTP_HOST;
+        mirror -R ./ $FTP_PATH;
+        bye
+        "

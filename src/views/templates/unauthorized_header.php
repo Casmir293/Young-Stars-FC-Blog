@@ -27,7 +27,7 @@ $page_query = isset($_GET['page']) ? $_GET['page'] : '';
 
 <nav class="navbar navbar-expand-lg bg-warning" data-bs-theme="dark">
     <div class="container">
-        <a class="navbar-brand" href="index.php"> Y<span class="text-primary">OUN</span>G✨<span class="text-primary">S</span>TAR<span class="text-primary">S✨F</span>C</a>
+        <a class="navbar-brand" href="index.php"> Yyy<span class="text-primary">OUN</span>G✨<span class="text-primary">S</span>TAR<span class="text-primary">S✨F</span>C</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
