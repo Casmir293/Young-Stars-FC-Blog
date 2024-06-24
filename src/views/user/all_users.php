@@ -2,7 +2,7 @@
 if (!defined('ROOT_PATH')) {
     define('ROOT_PATH', dirname(dirname(dirname(__FILE__))));
 }
-// http://localhost/blog/index.php?page=all_users
+
 require_once 'db.php';
 require_once './src/controllers/user_controller.php';
 $userController = new UserController($pdo);

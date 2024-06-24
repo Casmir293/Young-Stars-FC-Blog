@@ -61,7 +61,7 @@ class User
 
         if ($user) {
             if (password_verify($password, $user['password'])) {
-                $disable_stmt = $this->pdo->prepare("UPDATE users SET deleted = 1 WHERE id = ?");
+                $disable_stmt = $this->pdo->prepare("UPDATE users SET deleted = 1, status = 0 WHERE id = ?");
                 $disable_stmt->execute([$id]);
                 return ['status' => true, 'message' => 'Account deleted successfully.'];
             } else {

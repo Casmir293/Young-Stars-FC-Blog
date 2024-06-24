@@ -45,7 +45,7 @@ class AuthController
                                 <h2>You have Registered with Young Stars FC</h2>
                                 <p>Verify your email address with the below link to enable your login access.</p>
                                 <br/><br/>
-                                <a href='http://localhost/blog/?page=verify_email&action=verify_email&email=$email&token=$token'>Verify!</a>
+                                <a href='https://youngstars.casmir.dev/?page=verify_email&action=verify_email&email=$email&token=$token'>Verify!</a>
                                 ";
             $mail->Body = $email_template;
             $mail->send();
@@ -112,7 +112,7 @@ class AuthController
                                 <h2>You have requested a password reset on your Young Stars FC account</h2>
                                 <p>Verify your email address with the below link to enable you to set a new password.</p>
                                 <br/><br/>
-                                <a href='http://localhost/blog/?page=reset_password&action=reset_password&email=$email&token=$token'>Verify!</a>
+                                <a href='https://youngstars.casmir.dev/?page=reset_password&action=reset_password&email=$email&token=$token'>Verify!</a>
                                 ";
             $mail->Body = $email_template;
             $mail->send();
