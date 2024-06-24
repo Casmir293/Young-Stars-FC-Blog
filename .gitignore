@@ -1,6 +1,3 @@
 .DS_Store
-# vendor
 secret.php
-# db.php
-# config/db.php
 .env

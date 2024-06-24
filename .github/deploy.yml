@@ -28,3 +28,13 @@ jobs:
     # - name: Deploy
     #   run: |
     #     # Your deployment commands here
+
+    # - name: Upload to Namecheap via FTP
+    #   uses: SamKirkland/FTP-Deploy-Action@4.1.0
+    #   with:
+    #     server: ${{ secrets.FTP_SERVER }}
+    #     username: ${{ secrets.FTP_USERNAME }}
+    #     password: ${{ secrets.FTP_PASSWORD }}
+    #     port: ${{ secrets.FTP_PORT }}
+    #     local-dir: ./  # Local directory to upload, adjust as needed
+    #     server-dir: /youngstars.casmir.dev/
