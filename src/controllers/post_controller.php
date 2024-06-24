@@ -55,25 +55,6 @@ class PostController
         }
     }
 
-    // # DELETE A POST
-    // public function delete_post()
-    // {
-    //     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['id'])) {
-    //         $post_id = $_POST['post_id'];
-
-    //         if ($this->postModel->delete_post($post_id)) {
-    //             $_SESSION['message'] = 'Post deleted successfully.';
-    //             $_SESSION['status'] = true;
-    //         } else {
-    //             $_SESSION['message'] = 'Failed to delete post.';
-    //             $_SESSION['status'] = false;
-    //         }
-
-    //         header("Location: index.php");
-    //         exit();
-    //     }
-    // }
-
     # DELETE A POST
     public function delete_post()
     {
