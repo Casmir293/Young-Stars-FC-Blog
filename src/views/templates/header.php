@@ -113,15 +113,19 @@ $page_query = isset($_GET['page']) ? $_GET['page'] : '';
                             <li><a class="dropdown-item <?= $category_page === 'others' ? 'active' : '' ?>" href="?category=others">Others</a></li>
                         </ul>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle <?= isActive('create_post', $page_query, 'page', 'create_post') ?>" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Staff
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item <?= isActive('create_post', $page_query, 'page', 'create_post') ?>" href="?page=create_post">Add Post</a></li>
-                            <li><a class="dropdown-item <?= isActive('all_users', $page_query, 'page', 'all_users') ?>" href="?page=all_users">Role Management</a></li>
-                        </ul>
-                    </li>
+                    <?php if ($user_details['privilege'] == 'admin' || $user_details['privilege'] == 'editor') : ?>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle <?= isActive('create_post', $page_query, 'page', 'create_post') ?>" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Staff
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item <?= isActive('create_post', $page_query, 'page', 'create_post') ?>" href="?page=create_post">Add Post</a></li>
+                                <?php if ($user_details['privilege'] == 'admin') : ?>
+                                    <li><a class="dropdown-item <?= isActive('all_users', $page_query, 'page', 'all_users') ?>" href="?page=all_users">Role Management</a></li>
+                                <?php endif; ?>
+                            </ul>
+                        </li>
+                    <?php endif; ?>
                     <li class="nav-item logout">
                         <button class="btn btn-outline-light my-2" type="submit">Logout</button>
                     </li>

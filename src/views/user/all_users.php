@@ -2,6 +2,23 @@
 if (!defined('ROOT_PATH')) {
     define('ROOT_PATH', dirname(dirname(dirname(__FILE__))));
 }
+// http://localhost/blog/index.php?page=all_users
+require_once 'db.php';
+require_once './src/controllers/user_controller.php';
+$userController = new UserController($pdo);
+$user_details = $userController->view_user_profile();
+
+if ($user_details['privilege'] == 'member') {
+    $_SESSION['status'] = false;
+    $_SESSION['message'] = 'Unauthorized access';
+    header('Location: index.php');
+    exit;
+} else if ($user_details['privilege'] == 'editor') {
+    $_SESSION['status'] = false;
+    $_SESSION['message'] = 'Unauthorized access';
+    header('Location: index.php');
+    exit;
+}
 ?>
 
 <!DOCTYPE html>

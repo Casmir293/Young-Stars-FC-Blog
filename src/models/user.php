@@ -13,7 +13,7 @@ class User
     # GET SINGLE USER
     public function get_user_by_id($id)
     {
-        $stmt = $this->pdo->prepare("SELECT email, username, privilege, avatar, created_at FROM users WHERE id = ?");
+        $stmt = $this->pdo->prepare("SELECT email, username, privilege, avatar, created_at FROM users WHERE id = ? AND deleted = 0");
         $stmt->execute([$id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }

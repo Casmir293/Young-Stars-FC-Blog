@@ -4,7 +4,10 @@ if (!defined('ROOT_PATH')) {
 }
 require_once 'db.php';
 require_once './src/controllers/post_controller.php';
+require_once './src/controllers/user_controller.php';
 $postController = new PostController($pdo);
+$userController = new UserController($pdo);
+$user_details = $userController->view_user_profile();
 ?>
 
 <!DOCTYPE html>
@@ -72,7 +75,7 @@ $postController = new PostController($pdo);
     <section class="container">
         <section class=" outer-wrap my-5">
             <div class="wrap p-3 shadow-lg">
-                <p class="text-secondary fw-lighter">Posted by Admin <?= htmlspecialchars($post['created_at']) ?></p>
+                <p class="text-secondary fw-lighter">Posted <?= htmlspecialchars($post['created_at']) ?></p>
                 <div class="d-flex justify-content-center ">
                     <img src="<?= htmlspecialchars($post['image']) ?>" alt="" class="rounded-3" style="width: 100%; height: 400px; object-fit: cover;">
                 </div>
@@ -110,9 +113,11 @@ $postController = new PostController($pdo);
                     <?= nl2br(htmlspecialchars($post['content'])) ?>
                 </p>
 
-                <div>
-                    <button type="submit" class="btn btn-outline-danger my-3" data-bs-toggle="modal" data-bs-target="#exampleModal<?= $post['id'] ?>">Delete Post</button>
-                </div>
+                <?php if ($user_details['privilege'] == 'admin') : ?>
+                    <div>
+                        <button type="submit" class="btn btn-outline-danger my-3" data-bs-toggle="modal" data-bs-target="#exampleModal<?= $post['id'] ?>">Delete Post</button>
+                    </div>
+                <?php endif; ?>
                 <!-- modal -->
                 <div class="modal fade" id="exampleModal<?= $post['id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">

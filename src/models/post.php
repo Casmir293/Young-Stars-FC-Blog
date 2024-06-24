@@ -105,6 +105,14 @@ class Post
         return $stmt->execute([$post_id]);
     }
 
+    # GET USER PRIVILAGE
+    public function get_privilege($id)
+    {
+        $stmt = $this->pdo->prepare("SELECT privilege FROM users WHERE id = ? AND deleted = 0");
+        $stmt->execute([$id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
     // COMMENTS
 
     # ADD COMMENT TO POST
