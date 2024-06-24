@@ -17,6 +17,9 @@ class UserController
             $id = $_SESSION['id'];
             $user_details = $this->userModel->get_user_by_id($id);
             return $user_details;
+        } else if ($_GET['page'] == 'view_post') {
+            $user_details = $this->userModel->get_user_by_id('');
+            return $user_details;
         } else {
             header('Location: index.php');
             exit();

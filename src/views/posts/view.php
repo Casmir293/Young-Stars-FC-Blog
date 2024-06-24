@@ -113,10 +113,12 @@ $user_details = $userController->view_user_profile();
                     <?= nl2br(htmlspecialchars($post['content'])) ?>
                 </p>
 
-                <?php if ($user_details['privilege'] == 'admin') : ?>
-                    <div>
-                        <button type="submit" class="btn btn-outline-danger my-3" data-bs-toggle="modal" data-bs-target="#exampleModal<?= $post['id'] ?>">Delete Post</button>
-                    </div>
+                <?php if (isset($_SESSION['id'])) : ?>
+                    <?php if ($user_details['privilege'] == 'admin') : ?>
+                        <div>
+                            <button type="submit" class="btn btn-outline-danger my-3" data-bs-toggle="modal" data-bs-target="#exampleModal<?= $post['id'] ?>">Delete Post</button>
+                        </div>
+                    <?php endif; ?>
                 <?php endif; ?>
                 <!-- modal -->
                 <div class="modal fade" id="exampleModal<?= $post['id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
