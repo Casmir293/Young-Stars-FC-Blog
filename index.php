@@ -1,7 +1,7 @@
 <?php
 session_start();
 define('ROOT_PATH', __DIR__);
-require_once './config/db.php';
+// require_once './config/db.php';
 require_once './src/controllers/auth_controller.php';
 require_once './src/controllers/post_controller.php';
 require_once './src/controllers/user_controller.php';
